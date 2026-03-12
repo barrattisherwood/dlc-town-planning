@@ -22,19 +22,19 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
   
   slides: Slide[] = [
     {
-      image: '/assets/images/hero/urban-development.jpg',
+      image: 'assets/images/hero/urban-development.jpg',
       title: 'Expert Town Planning',
       subtitle: 'Across Africa',
       description: 'Professional planning solutions for sustainable urban development and project management'
     },
     {
-      image: '/assets/images/hero/sustainable-cities.jpg',
+      image: 'assets/images/hero/sustainable-cities.jpg',
       title: 'Sustainable Development',
       subtitle: 'For Tomorrow',
       description: 'Creating thriving communities through innovative urban planning and environmental stewardship'
     },
     {
-      image: '/assets/images/hero/infrastructure.jpg',
+      image: 'assets/images/hero/infrastructure.jpg',
       title: '20+ Years Experience',
       subtitle: 'Building the Future',
       description: 'Delivering exceptional planning services across residential, commercial, and municipal projects'
