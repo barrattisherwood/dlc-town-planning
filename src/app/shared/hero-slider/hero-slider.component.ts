@@ -35,7 +35,7 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
     },
     {
       image: '/assets/images/hero/infrastructure.jpg',
-      title: '20+ Years Experience',
+      title: '20+\u00A0Years Experience',
       subtitle: 'Building the Future',
       description: 'Delivering exceptional planning services across residential, commercial, and municipal projects'
     }
