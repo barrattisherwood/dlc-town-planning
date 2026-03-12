@@ -19,6 +19,7 @@ export class ProjectsComponent implements OnInit {
   allProjects = signal<Project[]>([]);
   selectedCategory = signal<string>('all');
   loading = signal(true);
+  focusedProjectId = signal<string | null>(null);
 
   categories = ['all', 'Residential', 'Commercial', 'Industrial', 'Mixed-Use', 'Municipal'];
 
@@ -125,5 +126,28 @@ export class ProjectsComponent implements OnInit {
 
   filterByCategory(category: string) {
     this.selectedCategory.set(category);
+  }
+
+  onProjectCardClick(projectId: string) {
+    this.focusedProjectId.set(projectId);
+    // Scroll to map section
+    const mapSection = document.querySelector('.map-section');
+    if (mapSection) {
+      mapSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  onMapMarkerClick(projectId: string) {
+    this.focusedProjectId.set(projectId);
+    // Scroll to project card
+    const projectCard = document.getElementById(`project-${projectId}`);
+    if (projectCard) {
+      projectCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Add highlight effect
+      projectCard.classList.add('highlight-pulse');
+      setTimeout(() => {
+        projectCard.classList.remove('highlight-pulse');
+      }, 2000);
+    }
   }
 }

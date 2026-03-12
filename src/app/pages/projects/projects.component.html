@@ -9,9 +9,13 @@
 </section>
 
 <!-- Interactive Map Section -->
-<section class="bg-warm-grey">
+<section class="bg-warm-grey map-section">
   <div class="w-full h-96 bg-gray-300 relative overflow-hidden">
-    <app-project-map [projects]="filteredProjects()" />
+    <app-project-map 
+      [projects]="filteredProjects()" 
+      [focusedProjectId]="focusedProjectId()"
+      (projectClicked)="onMapMarkerClick($event)"
+    />
   </div>
 </section>
 
@@ -45,7 +49,15 @@
     } @else {
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @for (project of filteredProjects(); track project.id) {
-          <app-project-card [project]="project" />
+          <div 
+            [id]="'project-' + project.id"
+            (click)="onProjectCardClick(project.id)"
+            class="cursor-pointer transition-all duration-300"
+            [class.ring-2]="focusedProjectId() === project.id"
+            [class.ring-teal]="focusedProjectId() === project.id"
+          >
+            <app-project-card [project]="project" />
+          </div>
         } @empty {
           <div class="col-span-full text-center py-12">
             <p class="text-muted">No projects found in this category.</p>

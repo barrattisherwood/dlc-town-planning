@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy, AfterViewInit, signal, effect } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, AfterViewInit, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
 import { Project } from '../../services/cms.service';
@@ -12,10 +12,15 @@ import { Project } from '../../services/cms.service';
 })
 export class ProjectMapComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() projects: Project[] = [];
-  @Input() selectedProjectId: string | null = null;
+  @Input() set focusedProjectId(id: string | null) {
+    if (id && this.map) {
+      this.focusOnProject(id);
+    }
+  }
+  @Output() projectClicked = new EventEmitter<string>();
 
   private map?: L.Map;
-  private markers: L.Marker[] = [];
+  private markers: Map<string, L.Marker> = new Map();
   private polygons: L.Polygon[] = [];
 
   mapReady = signal(false);
@@ -91,7 +96,7 @@ export class ProjectMapComponent implements OnInit, AfterViewInit, OnDestroy {
     // Clear existing markers and polygons
     this.markers.forEach(marker => marker.remove());
     this.polygons.forEach(polygon => polygon.remove());
-    this.markers = [];
+    this.markers.clear();
     this.polygons = [];
 
     const projectsWithCoords = this.projects.filter(p => p.latitude && p.longitude);
@@ -118,7 +123,13 @@ export class ProjectMapComponent implements OnInit, AfterViewInit, OnDestroy {
       `;
 
       marker.bindPopup(popupContent);
-      this.markers.push(marker);
+      
+      // Emit project click event
+      marker.on('click', () => {
+        this.projectClicked.emit(project.id);
+      });
+
+      this.markers.set(project.id, marker);
 
       // Add boundary polygon if available
       if (project.boundary && project.boundary.length > 0) {
@@ -138,9 +149,17 @@ export class ProjectMapComponent implements OnInit, AfterViewInit, OnDestroy {
     this.boundaryCount.set(this.polygons.length);
 
     // Fit map bounds to show all markers
-    if (this.markers.length > 0) {
-      const group = L.featureGroup(this.markers);
+    if (this.markers.size > 0) {
+      const group = L.featureGroup(Array.from(this.markers.values()));
       this.map.fitBounds(group.getBounds().pad(0.1));
+    }
+  }
+
+  private focusOnProject(projectId: string) {
+    const marker = this.markers.get(projectId);
+    if (marker && this.map) {
+      this.map.setView(marker.getLatLng(), 14, { animate: true });
+      marker.openPopup();
     }
   }
 }
