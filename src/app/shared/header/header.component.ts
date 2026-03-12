@@ -1,5 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, HostListener, signal, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,6 +10,9 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+  private router = inject(Router);
+  
+  scrolled = signal(false);
   mobileMenuOpen = signal(false);
 
   navItems = [
@@ -19,6 +22,16 @@ export class HeaderComponent {
     { path: '/projects', label: 'Projects' },
     { path: '/contact', label: 'Contact' }
   ];
+
+  constructor() {
+    // Start with navy background on non-home pages
+    this.scrolled.set(this.router.url !== '/');
+  }
+
+  @HostListener('window:scroll')
+  onScroll() {
+    this.scrolled.set(window.scrollY > 80);
+  }
 
   toggleMobileMenu() {
     this.mobileMenuOpen.update(value => !value);

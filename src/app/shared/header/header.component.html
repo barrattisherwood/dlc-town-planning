@@ -1,59 +1,59 @@
-<header class="bg-white shadow-md sticky top-0 z-50 border-b border-warm-grey">
-  <nav class="container-custom">
-    <div class="flex items-center justify-between h-24 py-2">
+<header class="nav" [class.scrolled]="scrolled()">
+  <div class="container-custom">
+    <div class="nav-inner">
       <!-- Logo -->
-      <a routerLink="/" class="flex items-center py-2">
-        <img src="/assets/images/dlclogo3.jpg" alt="DLC Town Planning Logo" class="h-20 w-auto object-contain" />
+      <a routerLink="/" class="nav-logo">
+        <img 
+          [src]="scrolled() ? '/assets/images/dlc-logo-dark.png' : '/assets/images/dlc-logo-white.png'"
+          alt="DLC Town Planning Logo" 
+          height="52"
+        />
       </a>
 
       <!-- Desktop Navigation -->
-      <div class="hidden md:flex items-center space-x-8">
+      <ul class="nav-links">
         @for (item of navItems; track item.path) {
-          <a
-            [routerLink]="item.path"
-            routerLinkActive="text-teal border-b-2 border-teal"
-            [routerLinkActiveOptions]="{exact: item.path === '/'}"
-            class="text-navy hover:text-teal transition-colors py-2 font-semibold"
-          >
-            {{ item.label }}
-          </a>
+          @if (item.path !== '/') {
+            <li>
+              <a
+                [routerLink]="item.path"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{exact: false}"
+                (click)="closeMobileMenu()"
+                [class.nav-cta]="item.label === 'Contact'"
+              >
+                {{ item.label }}
+              </a>
+            </li>
+          }
         }
-      </div>
+      </ul>
 
       <!-- Mobile menu button -->
       <button
         (click)="toggleMobileMenu()"
-        class="md:hidden text-navy p-2 hover:bg-off-white rounded-md transition-colors"
+        class="hamburger"
+        [class.open]="mobileMenuOpen()"
         [attr.aria-label]="mobileMenuOpen() ? 'Close menu' : 'Open menu'"
         [attr.aria-expanded]="mobileMenuOpen()"
       >
-        @if (!mobileMenuOpen()) {
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        } @else {
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        }
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
     </div>
+  </div>
 
-    <!-- Mobile Navigation -->
-    @if (mobileMenuOpen()) {
-      <div class="md:hidden py-4 border-t border-warm-grey bg-off-white">
-        @for (item of navItems; track item.path) {
-          <a
-            [routerLink]="item.path"
-            routerLinkActive="bg-teal text-white"
-            [routerLinkActiveOptions]="{exact: item.path === '/'}"
-            (click)="closeMobileMenu()"
-            class="block text-navy hover:bg-teal hover:text-white px-4 py-3 rounded-md transition-colors font-semibold"
-          >
-            {{ item.label }}
-          </a>
-        }
-      </div>
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-menu" [class.open]="mobileMenuOpen()">
+    @for (item of navItems; track item.path) {
+      <a
+        [routerLink]="item.path"
+        (click)="closeMobileMenu()"
+        [class.mobile-cta]="item.label === 'Contact'"
+      >
+        {{ item.label }}
+      </a>
     }
-  </nav>
+  </div>
 </header>
