@@ -1,12 +1,10 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { CmsService, Project } from '../../services/cms.service';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 import { ProjectCardComponent } from '../../shared/project-card/project-card.component';
 import { ProjectMapComponent } from '../../shared/project-map/project-map.component';
-import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-projects',
@@ -17,12 +15,10 @@ import { environment } from '../../../environments/environment';
 })
 export class ProjectsComponent implements OnInit {
   private cmsService = inject(CmsService);
-  private http = inject(HttpClient);
 
   allProjects = signal<Project[]>([]);
   selectedCategory = signal<string>('all');
   loading = signal(true);
-  apiLoaded = signal(false);
 
   categories = ['all', 'Residential', 'Commercial', 'Industrial', 'Mixed-Use', 'Municipal'];
 
@@ -36,28 +32,7 @@ export class ProjectsComponent implements OnInit {
   });
 
   ngOnInit() {
-    this.loadGoogleMapsScript();
     this.loadProjects();
-  }
-
-  loadGoogleMapsScript() {
-    if (typeof google !== 'undefined' && google.maps) {
-      this.apiLoaded.set(true);
-      return;
-    }
-
-    this.http
-      .jsonp(`https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}`, 'callback')
-      .subscribe({
-        next: () => {
-          this.apiLoaded.set(true);
-        },
-        error: (error) => {
-          console.error('Error loading Google Maps script:', error);
-          // Set to true anyway to show the placeholder
-          this.apiLoaded.set(true);
-        }
-      });
   }
 
   loadProjects() {

@@ -32,7 +32,7 @@ export interface Project {
   image?: string;
   latitude?: number;
   longitude?: number;
-  boundary?: google.maps.LatLngLiteral[]; // Array of coordinates defining project boundary
+  boundary?: { lat: number; lng: number }[]; // Array of coordinates defining project boundary
   featured?: boolean;
   completionDate?: string;
   website?: string;

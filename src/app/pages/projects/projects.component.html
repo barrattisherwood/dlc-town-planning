@@ -11,20 +11,7 @@
 <!-- Interactive Map Section -->
 <section class="bg-warm-grey">
   <div class="w-full h-96 bg-gray-300 relative overflow-hidden">
-    @if (apiLoaded()) {
-      <app-project-map [projects]="filteredProjects()" />
-    } @else {
-      <!-- Loading Placeholder -->
-      <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy/80 to-teal/80">
-        <div class="text-center text-white p-8">
-          <svg class="w-16 h-16 mx-auto mb-4 opacity-50 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-          <p class="text-lg font-semibold mb-2">Loading Project Map</p>
-          <p class="text-sm opacity-75">Initializing Google Maps API</p>
-        </div>
-      </div>
-    }
+    <app-project-map [projects]="filteredProjects()" />
   </div>
 </section>
 
