@@ -1,0 +1,136 @@
+<!-- Hero Section -->
+<section class="relative bg-navy text-white min-h-screen flex items-center">
+  <div class="absolute inset-0 bg-gradient-to-br from-navy via-navy to-teal opacity-90"></div>
+  <div class="absolute inset-0 bg-[url('/assets/hero-pattern.svg')] opacity-10"></div>
+  
+  <div class="container-custom relative z-10 py-20">
+    <div class="max-w-4xl">
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 text-white">
+        Expert Town Planning<br>
+        <span class="text-teal-light">Across Africa</span>
+      </h1>
+      <p class="text-xl md:text-2xl mb-10 text-gray-200 max-w-2xl">
+        Professional planning solutions for sustainable urban development and project management
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <a routerLink="/projects" class="btn btn-primary text-lg px-8 py-4">
+          View Our Projects
+        </a>
+        <a routerLink="/contact" class="btn btn-outline text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-navy">
+          Get in Touch
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Company Pillars Section -->
+<section class="section-padding bg-white">
+  <div class="container-custom">
+    <h2 class="text-center mb-12">Why Choose DLC</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      @for (pillar of pillars(); track pillar.id) {
+        <div class="card p-8 text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-teal rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 class="text-2xl mb-4">{{ pillar.title }}</h3>
+          <p class="text-muted">{{ pillar.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Services Teaser Section -->
+<section class="section-padding bg-off-white">
+  <div class="container-custom">
+    <div class="text-center mb-12">
+      <h2 class="mb-4">Our Services</h2>
+      <p class="text-xl text-muted max-w-2xl mx-auto">
+        Comprehensive town planning and project management solutions
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      @for (service of services(); track service.id) {
+        <a [routerLink]="['/services', service.slug]" class="card p-6 hover:shadow-xl transition-shadow">
+          <div class="w-12 h-12 mb-4 bg-teal/10 rounded-lg flex items-center justify-center">
+            <svg class="w-6 h-6 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+          </div>
+          <h3 class="text-xl mb-3">{{ service.title }}</h3>
+          <p class="text-muted">{{ service.summary }}</p>
+        </a>
+      }
+    </div>
+    <div class="text-center">
+      <a routerLink="/services" class="btn btn-primary">View All Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- Projects Teaser Section -->
+<section class="section-padding bg-white">
+  <div class="container-custom">
+    <div class="text-center mb-12">
+      <h2 class="mb-4">Featured Projects</h2>
+      <p class="text-xl text-muted max-w-2xl mx-auto">
+        Successful developments across southern Africa
+      </p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      @for (project of featuredProjects(); track project.id) {
+        <div class="card overflow-hidden">
+          <div class="h-48 bg-gradient-to-br from-teal to-teal-light"></div>
+          <div class="p-6">
+            <span class="inline-block px-3 py-1 bg-teal/10 text-teal text-sm rounded-full mb-3">
+              {{ project.category }}
+            </span>
+            <h3 class="text-xl mb-2">{{ project.title }}</h3>
+            <p class="text-muted text-sm mb-2 flex items-center">
+              <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              </svg>
+              {{ project.location }}
+            </p>
+            <p class="text-muted">{{ project.description }}</p>
+          </div>
+        </div>
+      }
+    </div>
+    <div class="text-center">
+      <a routerLink="/projects" class="btn btn-primary">View All Projects</a>
+    </div>
+  </div>
+</section>
+
+<!-- About Strip Section -->
+<section class="section-padding bg-navy text-white">
+  <div class="container-custom text-center">
+    <h2 class="text-white mb-6">Professional Planning Since 2000</h2>
+    <p class="text-xl text-gray-200 max-w-3xl mx-auto mb-8">
+      DLC Town Planning is a leading town planning and project management consultancy,
+      delivering professional services across South Africa and broader African markets.
+      Our team brings decades of experience in sustainable urban development.
+    </p>
+    <a routerLink="/about" class="btn btn-outline border-white text-white hover:bg-white hover:text-navy">
+      Learn More About Us
+    </a>
+  </div>
+</section>
+
+<!-- Contact CTA Section -->
+<section class="section-padding bg-teal text-white">
+  <div class="container-custom text-center">
+    <h2 class="text-white mb-6">Ready to Discuss Your Project?</h2>
+    <p class="text-xl mb-8 text-teal-light">
+      Get in touch with our team to explore how we can help bring your development vision to life
+    </p>
+    <a routerLink="/contact" class="btn btn-secondary">
+      Contact Us Today
+    </a>
+  </div>
+</section>

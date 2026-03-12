@@ -1,0 +1,61 @@
+<header class="bg-navy shadow-md sticky top-0 z-50">
+  <nav class="container-custom">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center space-x-2">
+        <div class="text-white font-heading text-2xl font-bold">
+          DLC Town Planning
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        @for (item of navItems; track item.path) {
+          <a
+            [routerLink]="item.path"
+            routerLinkActive="text-teal-light border-b-2 border-teal-light"
+            [routerLinkActiveOptions]="{exact: item.path === '/'}"
+            class="text-white hover:text-teal-light transition-colors py-2 font-medium"
+          >
+            {{ item.label }}
+          </a>
+        }
+      </div>
+
+      <!-- Mobile menu button -->
+      <button
+        (click)="toggleMobileMenu()"
+        class="md:hidden text-white p-2 hover:bg-white/10 rounded-md transition-colors"
+        [attr.aria-label]="mobileMenuOpen() ? 'Close menu' : 'Open menu'"
+        [attr.aria-expanded]="mobileMenuOpen()"
+      >
+        @if (!mobileMenuOpen()) {
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        } @else {
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        }
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    @if (mobileMenuOpen()) {
+      <div class="md:hidden py-4 border-t border-white/10">
+        @for (item of navItems; track item.path) {
+          <a
+            [routerLink]="item.path"
+            routerLinkActive="bg-teal text-white"
+            [routerLinkActiveOptions]="{exact: item.path === '/'}"
+            (click)="closeMobileMenu()"
+            class="block text-white hover:bg-teal-light hover:text-white px-4 py-3 rounded-md transition-colors font-medium"
+          >
+            {{ item.label }}
+          </a>
+        }
+      </div>
+    }
+  </nav>
+</header>

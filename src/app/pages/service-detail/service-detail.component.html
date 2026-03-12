@@ -1,0 +1,62 @@
+@if (loading()) {
+  <div class="min-h-screen flex items-center justify-center">
+    <p class="text-muted">Loading...</p>
+  </div>
+} @else if (service()) {
+  <!-- Page Hero -->
+  <section class="bg-navy text-white py-20">
+    <div class="container-custom">
+      <nav class="text-sm mb-4">
+        <a routerLink="/" class="text-teal-light hover:text-teal">Home</a>
+        <span class="mx-2 text-gray-400">/</span>
+        <a routerLink="/services" class="text-teal-light hover:text-teal">Services</a>
+        <span class="mx-2 text-gray-400">/</span>
+        <span class="text-gray-300">{{ service()!.title }}</span>
+      </nav>
+      <h1 class="text-white mb-4">{{ service()!.title }}</h1>
+      <p class="text-xl text-gray-200 max-w-3xl">
+        {{ service()!.summary }}
+      </p>
+    </div>
+  </section>
+
+  <!-- Service Content -->
+  <section class="section-padding bg-white">
+    <div class="container-custom">
+      <div class="max-w-4xl mx-auto">
+        <div class="prose prose-lg max-w-none" [innerHTML]="service()!.description"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services CTA -->
+  <section class="section-padding bg-off-white">
+    <div class="container-custom">
+      <div class="card p-8 text-center max-w-3xl mx-auto">
+        <h3 class="mb-4">Interested in This Service?</h3>
+        <p class="text-muted mb-6">
+          Contact our team to discuss how we can help with your {{ service()!.title.toLowerCase() }} needs
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a routerLink="/contact" class="btn btn-primary">
+            Get in Touch
+          </a>
+          <a routerLink="/services" class="btn btn-outline">
+            View All Services
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+} @else {
+  <!-- Service Not Found -->
+  <section class="section-padding bg-white min-h-screen flex items-center">
+    <div class="container-custom text-center">
+      <h2 class="mb-4">Service Not Found</h2>
+      <p class="text-muted mb-8">The service you're looking for doesn't exist.</p>
+      <a routerLink="/services" class="btn btn-primary">
+        View All Services
+      </a>
+    </div>
+  </section>
+}

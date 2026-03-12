@@ -1,0 +1,66 @@
+<!-- Page Hero -->
+<section class="bg-navy text-white py-20">
+  <div class="container-custom">
+    <nav class="text-sm mb-4">
+      <a routerLink="/" class="text-teal-light hover:text-teal">Home</a>
+      <span class="mx-2 text-gray-400">/</span>
+      <span class="text-gray-300">Services</span>
+    </nav>
+    <h1 class="text-white mb-4">Our Services</h1>
+    <p class="text-xl text-gray-200 max-w-3xl">
+      Comprehensive town planning and project management solutions tailored to your development needs
+    </p>
+  </div>
+</section>
+
+<!-- Services Grid -->
+<section class="section-padding bg-white">
+  <div class="container-custom">
+    @if (loading()) {
+      <div class="text-center py-12">
+        <p class="text-muted">Loading services...</p>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        @for (service of services(); track service.id) {
+          <a
+            [routerLink]="['/services', service.slug]"
+            class="card p-6 hover:shadow-xl transition-all group"
+          >
+            <!-- Icon -->
+            <div class="w-14 h-14 mb-4 bg-teal/10 rounded-lg flex items-center justify-center group-hover:bg-teal group-hover:scale-110 transition-all">
+              <svg class="w-7 h-7 text-teal group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </div>
+
+            <!-- Content -->
+            <h3 class="text-xl mb-3 group-hover:text-teal transition-colors">{{ service.title }}</h3>
+            <p class="text-muted mb-4">{{ service.summary }}</p>
+
+            <!-- Learn More -->
+            <span class="text-teal font-semibold flex items-center group-hover:gap-2 transition-all">
+              Learn More
+              <svg class="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </span>
+          </a>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-padding bg-navy text-white">
+  <div class="container-custom text-center">
+    <h2 class="text-white mb-6">Need Expert Planning Advice?</h2>
+    <p class="text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
+      Our experienced team is ready to guide you through every stage of your development project
+    </p>
+    <a routerLink="/contact" class="btn btn-primary">
+      Get in Touch
+    </a>
+  </div>
+</section>
