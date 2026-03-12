@@ -9,3 +9,14 @@
 img {
   object-position: center;
 }
+
+// Hero text styles - override global heading styles
+.hero-title {
+  color: #ffffff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+.hero-description {
+  color: #f3f4f6;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
