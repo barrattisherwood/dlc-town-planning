@@ -1,0 +1,23 @@
+<a
+  [routerLink]="['/services', service.slug]"
+  class="card p-6 hover:shadow-xl transition-all group block"
+>
+  <!-- Icon -->
+  <div class="w-14 h-14 mb-4 bg-teal/10 rounded-lg flex items-center justify-center group-hover:bg-teal group-hover:scale-110 transition-all">
+    <svg class="w-7 h-7 text-teal group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+    </svg>
+  </div>
+
+  <!-- Content -->
+  <h3 class="text-xl mb-3 group-hover:text-teal transition-colors">{{ service.title }}</h3>
+  <p class="text-muted mb-4">{{ service.summary }}</p>
+
+  <!-- Learn More -->
+  <span class="text-teal font-semibold flex items-center group-hover:gap-2 transition-all">
+    Learn More
+    <svg class="w-5 h-5 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+    </svg>
+  </span>
+</a>

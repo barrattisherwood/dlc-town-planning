@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CmsService, Pillar, Service, Project } from '../../services/cms.service';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
+import { ServiceCardComponent } from '../../shared/service-card/service-card.component';
+import { ProjectCardComponent } from '../../shared/project-card/project-card.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, LoadingSpinnerComponent],
+  imports: [CommonModule, RouterLink, LoadingSpinnerComponent, ServiceCardComponent, ProjectCardComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

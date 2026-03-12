@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CmsService, Project } from '../../services/cms.service';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
+import { ProjectCardComponent } from '../../shared/project-card/project-card.component';
 
 @Component({
   selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, FormsModule, LoadingSpinnerComponent],
+  imports: [CommonModule, FormsModule, LoadingSpinnerComponent, ProjectCardComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.scss'
 })
