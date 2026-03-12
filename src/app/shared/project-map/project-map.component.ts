@@ -43,7 +43,7 @@ export class ProjectMapComponent implements OnInit, AfterViewInit, OnDestroy {
       if (this.map && this.projects.length > 0) {
         this.updateMapMarkers();
       }
-    });
+    }, { allowSignalWrites: true });
   }
 
   ngOnInit() {
