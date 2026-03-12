@@ -18,8 +18,8 @@ module.exports = {
         tertiary: '#6C737B',
       },
       fontFamily: {
-        heading: ['Nunito', 'Avenir', 'sans-serif'],
-        body: ['DM Sans', 'sans-serif'],
+        heading: ['Playfair Display', 'serif'],
+        body: ['Source Sans Pro', 'sans-serif'],
       },
     },
   },
