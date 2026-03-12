@@ -10,13 +10,13 @@
         [class.z-0]="currentSlide() !== $index"
       >
         <!-- Background Image with Overlay -->
-        <div class="absolute inset-0">
-          <img [src]="slide.image" [alt]="slide.title" class="w-full h-full object-cover" />
-          <div class="absolute inset-0 bg-black/40"></div>
+        <div class="absolute inset-0 z-0">
+          <img [src]="slide.image" [alt]="slide.title" class="w-full h-full object-cover" loading="eager" />
+          <div class="absolute inset-0 bg-black/40 z-10"></div>
         </div>
 
         <!-- Content -->
-        <div class="relative h-full flex items-center z-20">
+        <div class="relative h-full flex items-center z-20">`
           <div class="container-custom">
             <div class="max-w-4xl text-white">
               <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
