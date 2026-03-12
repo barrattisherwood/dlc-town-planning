@@ -13,26 +13,31 @@
   </div>
 </section>
 
-<!-- Company Story -->
-<section class="section-padding bg-white">
-  <div class="container-custom">
-    <div class="max-w-4xl mx-auto">
-      <h2 class="mb-6">Our Story</h2>
-      @if (aboutContent()) {
-        <div class="prose prose-lg max-w-none">
-          <p class="text-lg text-text leading-relaxed mb-6">
-            {{ aboutContent()!.companyStory }}
-          </p>
-          <p class="text-lg text-text leading-relaxed">
-            Today, DLC Town Planning continues to push the boundaries of what's possible in urban development. 
-            We work closely with municipalities, private developers, and communities to create spaces that are 
-            not only functional but also sustainable and enriching for all stakeholders.
-          </p>
-        </div>
-      }
-    </div>
+@if (loading()) {
+  <div class="section-padding flex justify-center items-center min-h-[400px]">
+    <app-loading-spinner size="lg" color="teal" />
   </div>
-</section>
+} @else {
+  <!-- Company Story -->
+  <section class="section-padding bg-white">
+    <div class="container-custom">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="mb-6">Our Story</h2>
+        @if (aboutContent()) {
+          <div class="prose prose-lg max-w-none">
+            <p class="text-lg text-text leading-relaxed mb-6">
+              {{ aboutContent()!.companyStory }}
+            </p>
+            <p class="text-lg text-text leading-relaxed">
+              Today, DLC Town Planning continues to push the boundaries of what's possible in urban development. 
+              We work closely with municipalities, private developers, and communities to create spaces that are 
+              not only functional but also sustainable and enriching for all stakeholders.
+            </p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
 
 <!-- Mission & Vision -->
 <section class="section-padding bg-off-white">
@@ -132,3 +137,4 @@
     </a>
   </div>
 </section>
+}
