@@ -1,0 +1,11 @@
+// Smooth transitions are handled in the template with Tailwind classes
+// Additional custom styles can be added here if needed
+
+:host {
+  display: block;
+}
+
+// Ensure smooth image loading
+img {
+  object-position: center;
+}

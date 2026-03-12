@@ -5,11 +5,12 @@ import { CmsService, Pillar, Service, Project } from '../../services/cms.service
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 import { ServiceCardComponent } from '../../shared/service-card/service-card.component';
 import { ProjectCardComponent } from '../../shared/project-card/project-card.component';
+import { HeroSliderComponent } from '../../shared/hero-slider/hero-slider.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, LoadingSpinnerComponent, ServiceCardComponent, ProjectCardComponent],
+  imports: [CommonModule, RouterLink, LoadingSpinnerComponent, ServiceCardComponent, ProjectCardComponent, HeroSliderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
