@@ -18,7 +18,7 @@ interface Slide {
 })
 export class HeroSliderComponent implements OnInit, OnDestroy {
   currentSlide = signal(0);
-  private autoPlayInterval?: number;
+  private autoPlayInterval?: ReturnType<typeof setInterval>;
   
   slides: Slide[] = [
     {
@@ -47,10 +47,13 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.stopAutoPlay();
+    this.currentSlide.set(0); // Reset to first slide
   }
 
   startAutoPlay() {
-    this.autoPlayInterval = window.setInterval(() => {
+    // Clear any existing interval first
+    this.stopAutoPlay();
+    this.autoPlayInterval = setInterval(() => {
       this.nextSlide();
     }, 5000); // Change slide every 5 seconds
   }
