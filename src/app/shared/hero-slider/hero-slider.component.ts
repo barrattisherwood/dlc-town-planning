@@ -66,12 +66,16 @@ export class HeroSliderComponent implements OnInit, OnDestroy {
 
   nextSlide() {
     this.currentSlide.set((this.currentSlide() + 1) % this.slides.length);
+    this.stopAutoPlay();
+    this.startAutoPlay(); // Restart auto-play timer after manual navigation
   }
 
   previousSlide() {
     this.currentSlide.set(
       this.currentSlide() === 0 ? this.slides.length - 1 : this.currentSlide() - 1
     );
+    this.stopAutoPlay();
+    this.startAutoPlay(); // Restart auto-play timer after manual navigation
   }
 
   goToSlide(index: number) {
