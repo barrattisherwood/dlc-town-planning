@@ -1,0 +1,116 @@
+<!-- Page Hero with Map Placeholder -->
+<section class="bg-navy text-white py-12">
+  <div class="container-custom">
+    <h1 class="text-white mb-4">Our Projects</h1>
+    <p class="text-xl text-gray-200 max-w-3xl mb-8">
+      Successful developments across southern Africa demonstrating our expertise in town planning and project management
+    </p>
+  </div>
+</section>
+
+<!-- Interactive Map Section -->
+<section class="bg-warm-grey">
+  <div class="w-full h-96 bg-gray-300 relative overflow-hidden">
+    <!-- Map Placeholder - Integration point for Leaflet/Google Maps -->
+    <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy/80 to-teal/80">
+      <div class="text-center text-white p-8">
+        <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+        </svg>
+        <p class="text-lg font-semibold mb-2">Interactive Project Map</p>
+        <p class="text-sm opacity-75">Map integration coming soon with Leaflet/Google Maps</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Filter & Projects Section -->
+<section class="section-padding bg-white">
+  <div class="container-custom">
+    <!-- Category Filter -->
+    <div class="mb-8">
+      <h3 class="mb-4">Filter by Category</h3>
+      <div class="flex flex-wrap gap-3">
+        @for (category of categories; track category) {
+          <button
+            (click)="filterByCategory(category)"
+            [class.bg-teal]="selectedCategory() === category"
+            [class.text-white]="selectedCategory() === category"
+            [class.bg-off-white]="selectedCategory() !== category"
+            [class.text-text]="selectedCategory() !== category"
+            class="px-5 py-2 rounded-full font-medium transition-all hover:shadow-md"
+          >
+            {{ category }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Projects Grid -->
+    @if (loading()) {
+      <div class="text-center py-12">
+        <p class="text-muted">Loading projects...</p>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        @for (project of filteredProjects(); track project.id) {
+          <div class="card overflow-hidden hover:shadow-xl transition-shadow">
+            <!-- Project Image Placeholder -->
+            <div class="h-48 bg-gradient-to-br from-teal/70 to-teal-light/70 flex items-center justify-center">
+              <svg class="w-16 h-16 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+
+            <!-- Project Info -->
+            <div class="p-6">
+              <!-- Category Badge -->
+              <span class="inline-block px-3 py-1 bg-teal/10 text-teal text-sm rounded-full mb-3 font-medium">
+                {{ project.category }}
+              </span>
+
+              <!-- Title -->
+              <h3 class="text-xl mb-2">{{ project.title }}</h3>
+
+              <!-- Location -->
+              <p class="text-muted text-sm mb-3 flex items-center">
+                <svg class="w-4 h-4 mr-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                {{ project.location }}
+              </p>
+
+              <!-- Description -->
+              <p class="text-muted">{{ project.description }}</p>
+
+              <!-- Completion Date -->
+              @if (project.completionDate) {
+                <p class="text-sm text-tertiary mt-3">
+                  Completed: {{ project.completionDate }}
+                </p>
+              }
+            </div>
+          </div>
+        } @empty {
+          <div class="col-span-full text-center py-12">
+            <p class="text-muted">No projects found in this category.</p>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-padding bg-navy text-white">
+  <div class="container-custom text-center">
+    <h2 class="text-white mb-6">Start Your Next Project</h2>
+    <p class="text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
+      Partner with experienced professionals who deliver results
+    </p>
+    <a routerLink="/contact" class="btn btn-primary">
+      Discuss Your Project
+    </a>
+  </div>
+</section>

@@ -1,82 +1,264 @@
-<!-- Page Hero with Map Placeholder -->
+<!-- Page Hero -->
 <section class="bg-navy text-white py-12">
   <div class="container-custom">
     <h1 class="text-white mb-4">Our Projects</h1>
-    <p class="text-xl text-gray-200 max-w-3xl mb-8">
-      Successful developments across southern Africa demonstrating our expertise in town planning and project management
+    <p class="text-xl text-gray-200 max-w-3xl">
+      Successful developments across Africa demonstrating our expertise in town planning and project management
     </p>
   </div>
 </section>
 
-<!-- Interactive Map Section -->
-<section class="bg-warm-grey map-section">
-  <div class="w-full h-96 bg-gray-300 relative overflow-hidden">
-    <app-project-map 
-      [projects]="filteredProjects()" 
-      [focusedProjectId]="focusedProjectId()"
-      (projectClicked)="onMapMarkerClick($event)"
-    />
-  </div>
-</section>
-
-<!-- Filter & Projects Section -->
-<section class="section-padding bg-white">
+<!-- Filter Bar -->
+<div class="filter-bar">
   <div class="container-custom">
-    <!-- Category Filter -->
-    <div class="mb-8">
-      <h3 class="mb-4">Filter by Category</h3>
-      <div class="flex flex-wrap gap-3">
-        @for (category of categories; track category) {
-          <button
-            (click)="filterByCategory(category)"
-            [class.bg-teal]="selectedCategory() === category"
-            [class.text-white]="selectedCategory() === category"
-            [class.bg-off-white]="selectedCategory() !== category"
-            [class.text-text]="selectedCategory() !== category"
-            class="px-5 py-2 rounded-full font-medium transition-all hover:shadow-md"
-          >
-            {{ category }}
-          </button>
-        }
-      </div>
+    <!-- Region Pills -->
+    <div class="filter-pills">
+      @for (region of regions; track region) {
+        <button 
+          class="pill-btn"
+          [class.active]="regionFilter() === region"
+          (click)="setRegion(region)"
+        >
+          {{ regionLabel(region) }}
+        </button>
+      }
     </div>
 
-    <!-- Projects Grid -->
-    @if (loading()) {
-      <div class="flex justify-center items-center py-20">
-        <app-loading-spinner size="lg" color="teal" />
+    <!-- Controls -->
+    <div class="filter-controls">
+      <!-- Category Select -->
+      <select 
+        class="category-select"
+        [value]="categoryFilter()"
+        (change)="setCategory($any($event.target).value)"
+      >
+        @for (cat of categories; track cat) {
+          <option [value]="cat">{{ categoryLabel(cat) }}</option>
+        }
+      </select>
+
+      <!-- View Toggle -->
+      <div class="view-toggle">
+        <button 
+          class="view-btn"
+          [class.active]="viewMode() === 'list'"
+          (click)="setView('list')"
+          title="List View"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+        </button>
+        <button 
+          class="view-btn"
+          [class.active]="viewMode() === 'split'"
+          (click)="setView('split')"
+          title="Split View"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="12" y1="3" x2="12" y2="21"></line>
+          </svg>
+        </button>
+        <button 
+          class="view-btn"
+          [class.active]="viewMode() === 'map'"
+          (click)="setView('map')"
+          title="Map View"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Results Banner -->
+<div class="results-banner">
+  <div class="container-custom">
+    <span>{{ filteredProjects().length }} {{ filteredProjects().length === 1 ? 'project' : 'projects' }}</span>
+  </div>
+</div>
+
+<!-- Main Content Area -->
+<div class="content-area" [class]="'mode-' + viewMode()">
+  
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="project-list">
+      @for (i of [1,2,3,4,5,6]; track i) {
+        <div class="skeleton"></div>
+      }
+    </div>
+  } @else if (filteredProjects().length === 0) {
+    <!-- Empty State -->
+    <div class="empty-state">
+      <p>No projects match your filters.</p>
+      <button (click)="clearFilters()">Clear filters</button>
+    </div>
+  } @else if (viewMode() === 'list') {
+    <!-- List Mode -->
+    <div class="project-list">
+      @for (project of filteredProjects(); track project.id) {
+        <article 
+          class="project-card full-card"
+          [id]="'project-' + project.id"
+          (click)="onCardClick(project)"
+        >
+          @if (firstImage(project)) {
+            <div class="card-image">
+              <img [src]="firstImage(project)" [alt]="project.title" />
+            </div>
+          }
+          <div class="card-content">
+            <div class="card-location">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>{{ project.location }}</span>
+            </div>
+            <h3 class="card-title">{{ project.title }}</h3>
+            <p class="card-category">{{ project.category }}</p>
+            <p class="card-description">{{ project.description }}</p>
+          </div>
+        </article>
+      }
+    </div>
+  } @else if (viewMode() === 'split') {
+    <!-- Split Mode -->
+    @if (activeProject()) {
+      <!-- Expanded Detail Panel -->
+      <div class="project-detail-panel">
+        <button class="detail-close-btn" (click)="closeDetail()" aria-label="Close details">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        
+        <!-- Image Gallery or Video -->
+        @if (activeProject()!.videoUrl && getVideoEmbedUrl(activeProject()!)) {
+          <div class="detail-video">
+            <iframe 
+              [src]="getVideoEmbedUrl(activeProject()!)! | safeUrl" 
+              allowfullscreen
+            ></iframe>
+          </div>
+        } @else if (activeProject()!.images && activeProject()!.images!.length > 0) {
+          <div class="detail-gallery">
+            <img [src]="activeProject()!.images![0]" [alt]="activeProject()!.title" />
+          </div>
+        } @else if (firstImage(activeProject()!)) {
+          <div class="detail-image">
+            <img [src]="firstImage(activeProject()!)" [alt]="activeProject()!.title" />
+          </div>
+        }
+        
+        <div class="detail-content">
+          <button class="detail-back-btn" (click)="closeDetail()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back to projects</span>
+          </button>
+          
+          <div class="detail-location">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>{{ activeProject()!.location }}</span>
+          </div>
+          
+          <h2 class="detail-title">{{ activeProject()!.title }}</h2>
+          
+          <div class="detail-meta">
+            <span class="detail-category">{{ activeProject()!.category }}</span>
+            @if (activeProject()!.completionDate) {
+              <span class="detail-date">{{ activeProject()!.completionDate }}</span>
+            }
+          </div>
+          
+          <p class="detail-description">{{ activeProject()!.description }}</p>
+          
+          @if (activeProject()!.projectUrl) {
+            <a [href]="activeProject()!.projectUrl" target="_blank" rel="noopener" class="detail-link">
+              View Project Website →
+            </a>
+          }
+        </div>
       </div>
     } @else {
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Compact Cards List -->
+      <div class="project-list">
         @for (project of filteredProjects(); track project.id) {
-          <div 
+          <article 
+            class="project-card compact-card"
             [id]="'project-' + project.id"
-            (click)="onProjectCardClick(project.id)"
-            class="cursor-pointer transition-all duration-300"
-            [class.ring-2]="focusedProjectId() === project.id"
-            [class.ring-teal]="focusedProjectId() === project.id"
+            (click)="onCardClick(project)"
           >
-            <app-project-card [project]="project" />
-          </div>
-        } @empty {
-          <div class="col-span-full text-center py-12">
-            <p class="text-muted">No projects found in this category.</p>
-          </div>
+            @if (firstImage(project)) {
+              <div class="card-image">
+                <img [src]="firstImage(project)" [alt]="project.title" />
+              </div>
+            }
+            <div class="card-content">
+              <div class="card-location">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span>{{ project.location }}</span>
+              </div>
+              <h3 class="card-title">{{ project.title }}</h3>
+              <p class="card-category">{{ project.category }}</p>
+            </div>
+          </article>
         }
       </div>
     }
-  </div>
-</section>
-
-<!-- CTA Section -->
-<section class="section-padding bg-navy text-white">
-  <div class="container-custom text-center">
-    <h2 class="text-white mb-6">Start Your Next Project</h2>
-    <p class="text-xl mb-8 text-gray-200 max-w-2xl mx-auto">
-      Partner with experienced professionals who deliver results
-    </p>
-    <a routerLink="/contact" class="btn btn-primary">
-      Discuss Your Project
-    </a>
-  </div>
-</section>
+    <div class="map-container">
+      <div id="projects-map" class="leaflet-map"></div>
+    </div>
+  } @else {
+    <!-- Map Mode -->
+    <div class="map-container">
+      <div id="projects-map" class="leaflet-map"></div>
+      
+      <!-- Floating Active Card -->
+      @if (activeProject()) {
+        <div class="map-float-card">
+          @if (firstImage(activeProject()!)) {
+            <div class="float-card-image">
+              <img [src]="firstImage(activeProject()!)" [alt]="activeProject()!.title" />
+            </div>
+          }
+          <div class="float-card-body">
+            <div class="card-location">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              <span>{{ activeProject()!.location }}</span>
+            </div>
+            <h4>{{ activeProject()!.title }}</h4>
+            <p>{{ activeProject()!.category }}</p>
+            <span class="view-more">Click to view details →</span>
+          </div>
+          <button class="float-card-close" (click)="closeDetail(); $event.stopPropagation()">×</button>
+        </div>
+      }
+    </div>
+  }
+</div>

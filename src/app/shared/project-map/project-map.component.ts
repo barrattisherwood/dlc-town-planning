@@ -117,7 +117,7 @@ export class ProjectMapComponent implements OnInit, AfterViewInit, OnDestroy {
           <h3 class="popup-title">${project.title}</h3>
           <p class="popup-location">${project.location}</p>
           <p class="popup-description">${project.description}</p>
-          ${project.website ? `<a href="${project.website}" target="_blank" class="popup-link">Visit Website →</a>` : ''}
+          ${project.projectUrl ? `<a href="${project.projectUrl}" target="_blank" class="popup-link">Visit Website →</a>` : ''}
           ${project.completionDate ? `<p class="popup-date">Completed: ${project.completionDate}</p>` : ''}
         </div>
       `;

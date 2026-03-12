@@ -1,0 +1,72 @@
+<div class="modal-backdrop" (click)="onBackdropClick($event)">
+  <div class="modal-panel">
+    <button class="modal-close" (click)="onCloseClick()" aria-label="Close">×</button>
+    
+    <!-- Image Gallery -->
+    @if (hasGallery() && !hasVideo()) {
+      <div class="gallery">
+        <img 
+          [src]="project().images![currentImageIndex()]" 
+          [alt]="project().title" 
+          class="gallery-image"
+        />
+        
+        @if ((project().images?.length ?? 0) > 1) {
+          <button class="gallery-btn prev" (click)="prevImage()" aria-label="Previous">‹</button>
+          <button class="gallery-btn next" (click)="nextImage()" aria-label="Next">›</button>
+          
+          <div class="gallery-dots">
+            @for (img of project().images; track $index) {
+              <span 
+                class="dot" 
+                [class.active]="currentImageIndex() === $index"
+                (click)="goToImage($index)"
+              ></span>
+            }
+          </div>
+        }
+      </div>
+    }
+    
+    <!-- Video -->
+    @if (hasVideo()) {
+      <div class="video-wrapper">
+        <iframe 
+          [src]="getVideoEmbedUrl()! | safeUrl"
+          allowfullscreen
+        ></iframe>
+      </div>
+    }
+    
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <div class="location">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>{{ project().location }}</span>
+          </div>
+          <h2>{{ project().title }}</h2>
+        </div>
+        
+        @if (project().projectUrl) {
+          <a [href]="project().projectUrl" target="_blank" rel="noopener" class="external-link">
+            View Project
+          </a>
+        }
+      </div>
+      
+      <div class="modal-description">
+        {{ project().description }}
+      </div>
+      
+      @if (hasMap()) {
+        <div class="modal-map-wrap">
+          <div id="modal-mini-map" class="modal-mini-map"></div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

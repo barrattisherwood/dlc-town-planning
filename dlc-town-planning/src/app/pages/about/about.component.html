@@ -1,0 +1,134 @@
+<!-- Page Hero -->
+<section class="bg-navy text-white py-20">
+  <div class="container-custom">
+    <nav class="text-sm mb-4">
+      <a routerLink="/" class="text-teal-light hover:text-teal">Home</a>
+      <span class="mx-2 text-gray-400">/</span>
+      <span class="text-gray-300">About</span>
+    </nav>
+    <h1 class="text-white mb-4">About DLC Town Planning</h1>
+    <p class="text-xl text-gray-200 max-w-3xl">
+      Professional town planning and project management services built on experience, integrity, and innovation
+    </p>
+  </div>
+</section>
+
+<!-- Company Story -->
+<section class="section-padding bg-white">
+  <div class="container-custom">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="mb-6">Our Story</h2>
+      @if (aboutContent()) {
+        <div class="prose prose-lg max-w-none">
+          <p class="text-lg text-text leading-relaxed mb-6">
+            {{ aboutContent()!.companyStory }}
+          </p>
+          <p class="text-lg text-text leading-relaxed">
+            Today, DLC Town Planning continues to push the boundaries of what's possible in urban development. 
+            We work closely with municipalities, private developers, and communities to create spaces that are 
+            not only functional but also sustainable and enriching for all stakeholders.
+          </p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Mission & Vision -->
+<section class="section-padding bg-off-white">
+  <div class="container-custom">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="card p-8">
+        <div class="w-12 h-12 mb-4 bg-teal rounded-full flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+        </div>
+        <h3 class="mb-4">Our Mission</h3>
+        @if (aboutContent()) {
+          <p class="text-muted">{{ aboutContent()!.mission }}</p>
+        }
+      </div>
+      <div class="card p-8">
+        <div class="w-12 h-12 mb-4 bg-teal rounded-full flex items-center justify-center">
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+        </div>
+        <h3 class="mb-4">Our Vision</h3>
+        @if (aboutContent()) {
+          <p class="text-muted">{{ aboutContent()!.vision }}</p>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Company Pillars Expanded -->
+<section class="section-padding bg-white">
+  <div class="container-custom">
+    <h2 class="text-center mb-12">What Sets Us Apart</h2>
+    <div class="space-y-8">
+      @for (pillar of pillars(); track pillar.id) {
+        <div class="card p-8">
+          <h3 class="mb-4">{{ pillar.title }}</h3>
+          <p class="text-muted text-lg">{{ pillar.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Values -->
+<section class="section-padding bg-off-white">
+  <div class="container-custom">
+    <h2 class="text-center mb-12">Our Values</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      @for (value of values; track value.title) {
+        <div class="card p-6 text-center">
+          <div class="w-16 h-16 mx-auto mb-4 bg-teal/10 rounded-full flex items-center justify-center">
+            <svg class="w-8 h-8 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h4 class="mb-3">{{ value.title }}</h4>
+          <p class="text-sm text-muted">{{ value.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Accreditations -->
+<section class="section-padding bg-navy text-white">
+  <div class="container-custom">
+    <h2 class="text-center text-white mb-12">Professional Accreditations</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+      @for (accreditation of accreditations; track accreditation.name) {
+        <div class="text-center">
+          <div class="w-20 h-20 mx-auto mb-4 bg-teal rounded-full flex items-center justify-center">
+            <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+            </svg>
+          </div>
+          <h4 class="text-lg font-semibold mb-2">{{ accreditation.name }}</h4>
+          <p class="text-sm text-gray-300">{{ accreditation.description }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section-padding bg-teal text-white">
+  <div class="container-custom text-center">
+    <h2 class="text-white mb-6">Let's Work Together</h2>
+    <p class="text-xl mb-8 max-w-2xl mx-auto">
+      Partner with a team that brings professionalism, experience, and passion to every project
+    </p>
+    <a routerLink="/contact" class="btn btn-secondary">
+      Start a Conversation
+    </a>
+  </div>
+</section>
