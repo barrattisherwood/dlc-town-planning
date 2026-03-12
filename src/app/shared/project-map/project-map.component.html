@@ -1,0 +1,55 @@
+<div class="w-full h-full relative">
+  <google-map
+    [options]="mapOptions"
+    [center]="center()"
+    [zoom]="zoom()"
+    width="100%"
+    height="100%"
+  >
+    <!-- Project Boundaries (Polygons) -->
+    @for (boundary of boundaries(); track boundary.projectId) {
+      <map-polygon
+        [paths]="boundary.paths"
+        [options]="polygonOptions"
+      />
+    }
+
+    <!-- Project Markers -->
+    @for (marker of markers(); track marker.project.id) {
+      <map-marker
+        [position]="marker.position"
+        [title]="marker.title"
+        [options]="markerOptions"
+        (mapClick)="onMarkerClick(marker)"
+      >
+        <map-info-window>
+          <div class="p-3">
+            <h3 class="font-heading font-bold text-navy mb-1">{{ marker.project.title }}</h3>
+            <p class="text-sm text-muted mb-2">{{ marker.project.location }}</p>
+            <p class="text-xs text-text">{{ marker.project.description }}</p>
+            @if (marker.project.completionDate) {
+              <p class="text-xs text-teal mt-2">Completed: {{ marker.project.completionDate }}</p>
+            }
+          </div>
+        </map-info-window>
+      </map-marker>
+    }
+  </google-map>
+
+  <!-- Map Legend -->
+  <div class="absolute top-4 right-4 bg-white rounded-lg shadow-lg p-4 max-w-xs">
+    <h4 class="font-heading font-semibold text-navy mb-2 text-sm">Project Locations</h4>
+    <div class="space-y-1 text-xs text-muted">
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 rounded-full bg-teal"></div>
+        <span>{{ markers().length }} Projects mapped</span>
+      </div>
+      @if (boundaries().length > 0) {
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 bg-teal/20 border-2 border-teal"></div>
+          <span>Project boundaries shown</span>
+        </div>
+      }
+    </div>
+  </div>
+</div>
