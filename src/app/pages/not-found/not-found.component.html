@@ -1,0 +1,46 @@
+<section class="min-h-screen flex items-center justify-center bg-off-white">
+  <div class="container-custom text-center py-20">
+    <!-- 404 Icon -->
+    <div class="mb-8">
+      <svg class="w-32 h-32 mx-auto text-muted opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+
+    <!-- 404 Text -->
+    <h1 class="text-6xl md:text-8xl font-bold text-navy mb-4">404</h1>
+    <h2 class="text-2xl md:text-3xl mb-6">Page Not Found</h2>
+    <p class="text-lg text-muted mb-8 max-w-2xl mx-auto">
+      The page you're looking for doesn't exist or has been moved.
+      Let's get you back on track.
+    </p>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a routerLink="/" class="btn btn-primary">
+        Back to Home
+      </a>
+      <a routerLink="/services" class="btn btn-outline">
+        View Our Services
+      </a>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="mt-16">
+      <p class="text-sm text-muted mb-4">Looking for something specific?</p>
+      <div class="flex flex-wrap gap-3 justify-center">
+        <a routerLink="/about" class="text-teal hover:text-teal-light text-sm font-medium">
+          About Us
+        </a>
+        <span class="text-muted">•</span>
+        <a routerLink="/projects" class="text-teal hover:text-teal-light text-sm font-medium">
+          Our Projects
+        </a>
+        <span class="text-muted">•</span>
+        <a routerLink="/contact" class="text-teal hover:text-teal-light text-sm font-medium">
+          Contact
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

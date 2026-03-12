@@ -1,0 +1,6 @@
+# robots.txt for DLC Town Planning
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://dlctownplanning.co.za/sitemap.xml

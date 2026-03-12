@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 // Interfaces for CMS content types
 export interface Pillar {
@@ -55,8 +56,8 @@ export interface CMSResponse<T> {
 })
 export class CmsService {
   private http = inject(HttpClient);
-  private readonly API_BASE_URL = 'https://content.arclink.dev/api';
-  private readonly SITE_ID = 'dlc-townplanning';
+  private readonly API_BASE_URL = environment.cmsApiUrl;
+  private readonly SITE_ID = environment.cmsSiteId;
 
   constructor() { }
 
