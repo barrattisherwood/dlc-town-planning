@@ -1,4 +1,4 @@
-<section class="relative overflow-hidden" style="height: calc(100vh - 6rem);">
+<section class="relative overflow-hidden h-screen">
   <!-- Slides -->
   <div class="relative h-full">
     @for (slide of slides; track $index) {
@@ -76,5 +76,13 @@
           [attr.aria-label]="'Go to slide ' + ($index + 1)">
         </div>
       }
+    </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 right-8 z-30 flex flex-col items-center gap-2 animate-bounce">
+      <span class="text-white/80 text-sm font-light tracking-wider">Scroll</span>
+      <svg class="w-6 h-6 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
     </div>
   </section>
