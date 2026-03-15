@@ -8,7 +8,7 @@
   transition: background 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
 
   &.scrolled {
-    background: var(--navy);
+    background: #ffffff;
     box-shadow: 0 2px 24px rgba(0, 0, 0, 0.2);
   }
 }
@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 0;
+  padding: 1.25rem 0;
   transition: padding 0.35s ease;
 
   .nav.scrolled & {
@@ -27,12 +27,12 @@
 
 .nav-logo img {
   display: block;
-  height: 52px;
+  height: 56px;
   width: auto;
   transition: height 0.35s ease;
 
   .nav.scrolled & {
-    height: 44px;
+    height: 48px;
   }
 }
 
@@ -54,6 +54,10 @@
     position: relative;
     transition: color 0.2s;
 
+    .nav.scrolled & {
+      color: var(--navy);
+    }
+
     &::after {
       content: '';
       position: absolute;
@@ -73,6 +77,10 @@
 
     &:hover {
       color: #fff;
+
+      .nav.scrolled & {
+        color: var(--teal);
+      }
     }
   }
 }
@@ -112,7 +120,11 @@
     height: 2px;
     background: #fff;
     border-radius: 2px;
-    transition: transform 0.25s ease, opacity 0.25s ease;
+    transition: transform 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+
+    .nav.scrolled & {
+      background: var(--navy);
+    }
   }
 
   &.open span:nth-child(1) {

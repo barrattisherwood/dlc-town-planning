@@ -41,10 +41,50 @@ export class HomeComponent implements OnInit {
       { id: '3', slug: 'environmental-planning', title: 'Environmental Planning', summary: 'Sustainable environmental impact assessments', description: '', icon: 'environment' }
     ]);
 
+    // Featured projects with real data
     this.featuredProjects.set([
-      { id: '1', title: 'Gauteng Mixed-Use Development', location: 'Johannesburg, South Africa', category: 'Mixed-Use', description: 'Large-scale urban development project', featured: true },
-      { id: '2', title: 'Coastal Residential Estate', location: 'Cape Town, South Africa', category: 'Residential', description: 'Luxury coastal estate development', featured: true },
-      { id: '3', title: 'Industrial Park Expansion', location: 'Durban, South Africa', category: 'Industrial', description: 'Strategic industrial zone planning', featured: true }
+      { 
+        id: '1', 
+        title: 'Tatu City', 
+        location: 'Nairobi, Kenya', 
+        region: 'East Africa',
+        country: 'Kenya',
+        category: 'Mixed-Use', 
+        description: 'Large-scale master-planned community spanning 2,500 acres with residential, commercial, and industrial components', 
+        image: '/assets/images/projects/tatu-city.jpg',
+        featured: true,
+        latitude: -1.166667,
+        longitude: 36.916667,
+        completionDate: '2014'
+      },
+      { 
+        id: '2', 
+        title: 'Cape Town Waterfront Development', 
+        location: 'V&A Waterfront, Cape Town', 
+        region: 'Southern Africa',
+        country: 'South Africa',
+        category: 'Commercial', 
+        description: 'Strategic commercial and retail development in the iconic V&A Waterfront precinct', 
+        image: '/assets/images/projects/cape-town-waterfront.jpg',
+        featured: true,
+        latitude: -33.907444,
+        longitude: 18.419222,
+        completionDate: '2018'
+      },
+      { 
+        id: '3', 
+        title: 'Durban Industrial Park', 
+        location: 'Durban South, KwaZulu-Natal', 
+        region: 'Southern Africa',
+        country: 'South Africa',
+        category: 'Industrial', 
+        description: 'Comprehensive industrial park development with strategic logistics and manufacturing zones', 
+        image: '/assets/images/projects/durban-industrial.jpg',
+        featured: true,
+        latitude: -29.9611,
+        longitude: 30.9467,
+        completionDate: '2019'
+      }
     ]);
 
     this.loading.set(false);

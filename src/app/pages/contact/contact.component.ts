@@ -45,34 +45,29 @@ export class ContactComponent {
       this.submitting.set(true);
       this.error.set(null);
 
-      // In production, this would post to forms.arclink.dev
-      const formData = this.contactForm.value;
-      console.log('Form submitted:', formData);
+      const formData = {
+        site: 'dlc-townplanning',
+        form: 'contact',
+        data: this.contactForm.value
+      };
 
-      // Simulate API call
-      setTimeout(() => {
-        this.submitting.set(false);
-        this.submitted.set(true);
-        this.contactForm.reset();
+      this.http.post('https://forms.arclink.dev/api/submit', formData).subscribe({
+        next: () => {
+          this.submitting.set(false);
+          this.submitted.set(true);
+          this.contactForm.reset();
 
-        // Reset success message after 5 seconds
-        setTimeout(() => {
-          this.submitted.set(false);
-        }, 5000);
-      }, 1000);
-
-      // Production code would look like:
-      // this.http.post('https://forms.arclink.dev/api/submit', formData).subscribe({
-      //   next: () => {
-      //     this.submitting.set(false);
-      //     this.submitted.set(true);
-      //     this.contactForm.reset();
-      //   },
-      //   error: (err) => {
-      //     this.submitting.set(false);
-      //     this.error.set('Failed to submit form. Please try again.');
-      //   }
-      // });
+          // Reset success message after 5 seconds
+          setTimeout(() => {
+            this.submitted.set(false);
+          }, 5000);
+        },
+        error: (err) => {
+          console.error('Form submission error:', err);
+          this.submitting.set(false);
+          this.error.set('Failed to submit form. Please try again or contact us directly via email.');
+        }
+      });
     } else {
       // Mark all fields as touched to show validation errors
       Object.keys(this.contactForm.controls).forEach(key => {

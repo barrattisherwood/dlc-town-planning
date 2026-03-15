@@ -10,4 +10,10 @@ import { Project } from '../../services/cms.service';
 })
 export class ProjectCardComponent {
   @Input({ required: true }) project!: Project;
+
+  onImageError(event: Event) {
+    // Hide broken image, fallback will show
+    const img = event.target as HTMLImageElement;
+    img.style.display = 'none';
+  }
 }

@@ -85,6 +85,15 @@
   .card {
     @apply bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200;
   }
+
+  /* Fixed header offset for inner pages */
+  app-about > section:first-child,
+  app-services > section:first-child,
+  app-projects > section:first-child,
+  app-contact > section:first-child,
+  app-service-detail > section:first-child {
+    padding-top: 5.5rem; /* Account for fixed header height (~88px) */
+  }
 }
 
 /* Utility styles */
