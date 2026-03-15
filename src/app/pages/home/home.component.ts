@@ -2,42 +2,11 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { CmsService } from '../../services/cms.service';
+import { Project, Service, Pillar } from '../../models/project.model';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 import { ServiceCardComponent } from '../../shared/service-card/service-card.component';
 import { ProjectCardComponent } from '../../shared/project-card/project-card.component';
 import { HeroSliderComponent } from '../../shared/hero-slider/hero-slider.component';
-
-// Placeholder interfaces for static data (will be replaced with CMS types when connected)
-interface PlaceholderPillar {
-  id: string;
-  title: string;
-  description: string;
-  icon?: string;
-}
-
-interface PlaceholderService {
-  id: string;
-  slug: string;
-  title: string;
-  summary: string;
-  description: string;
-  icon?: string;
-}
-
-interface PlaceholderProject {
-  id: string;
-  title: string;
-  location: string;
-  region: string;
-  country: string;
-  category: string;
-  description: string;
-  image?: string;
-  featured?: boolean;
-  latitude?: number;
-  longitude?: number;
-  completionDate?: string;
-}
 
 @Component({
   selector: 'app-home',
@@ -49,9 +18,9 @@ interface PlaceholderProject {
 export class HomeComponent implements OnInit {
   private cmsService = inject(CmsService);
 
-  pillars = signal<PlaceholderPillar[]>([]);
-  services = signal<PlaceholderService[]>([]);
-  featuredProjects = signal<PlaceholderProject[]>([]);
+  pillars = signal<Pillar[]>([]);
+  services = signal<Service[]>([]);
+  featuredProjects = signal<Project[]>([]);
   loading = signal(true);
 
   ngOnInit() {

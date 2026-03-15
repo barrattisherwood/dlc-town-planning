@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, AfterViewInit, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
-import { Project } from '../../services/cms.service';
+import { Project } from '../../models/project.model';
 
 @Component({
   selector: 'app-project-map',
@@ -133,7 +133,10 @@ export class ProjectMapComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // Add boundary polygon if available
       if (project.boundary && project.boundary.length > 0) {
-        const latLngs: L.LatLngExpression[] = project.boundary.map(coord => [coord.lat, coord.lng]);
+        // Handle both formats: {lat, lng} objects or [lat, lng] tuples
+        const latLngs: L.LatLngExpression[] = project.boundary.map(coord => 
+          Array.isArray(coord) ? [coord[0], coord[1]] : [coord.lat, coord.lng]
+        );
         const polygon = L.polygon(latLngs, {
           color: '#0e7c72',
           fillColor: '#0e7c72',

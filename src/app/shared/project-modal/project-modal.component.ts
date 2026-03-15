@@ -1,7 +1,7 @@
 import { Component, input, output, signal, effect, NgZone, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import * as L from 'leaflet';
-import { Project } from '../../services/cms.service';
+import { Project } from '../../models/project.model';
 import { SafeUrlPipe } from '../pipes/safe-url.pipe';
 
 @Component({

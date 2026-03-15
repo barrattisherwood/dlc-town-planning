@@ -1,7 +1,8 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { CmsService, Service } from '../../services/cms.service';
+import { CmsService } from '../../services/cms.service';
+import { Service } from '../../models/project.model';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 import { ServiceCardComponent } from '../../shared/service-card/service-card.component';
 

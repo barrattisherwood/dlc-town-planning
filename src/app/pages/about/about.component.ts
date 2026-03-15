@@ -1,7 +1,8 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { CmsService, AboutContent, Pillar } from '../../services/cms.service';
+import { CmsService } from '../../services/cms.service';
+import { Pillar } from '../../models/project.model';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 
 @Component({

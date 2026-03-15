@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, inject, signal, computed, effect, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CmsService, Project } from '../../services/cms.service';
+import { CmsService } from '../../services/cms.service';
+import { Project } from '../../models/project.model';
 import { SafeUrlPipe } from '../../shared/pipes/safe-url.pipe';
 import * as L from 'leaflet';
 

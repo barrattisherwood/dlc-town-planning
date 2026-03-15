@@ -1,14 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-// Local interface for project card (works with both placeholder and CMS data)
-export interface ProjectCardData {
-  title: string;
-  location: string;
-  category: string;
-  description: string;
-  image?: string;
-  completionDate?: string;
-}
+import { Project } from '../../models/project.model';
 
 @Component({
   selector: 'app-project-card',
@@ -18,7 +9,7 @@ export interface ProjectCardData {
   styleUrl: './project-card.component.scss'
 })
 export class ProjectCardComponent {
-  @Input({ required: true }) project!: ProjectCardData;
+  @Input({ required: true }) project!: Project;
 
   onImageError(event: Event) {
     // Hide broken image, fallback will show
