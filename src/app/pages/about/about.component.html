@@ -23,19 +23,17 @@
     <div class="container-custom">
       <div class="max-w-4xl mx-auto">
         <h2 class="mb-6">About DLC</h2>
-        @if (aboutContent()) {
-          <div class="prose prose-lg max-w-none">
-            <p class="text-lg text-text leading-relaxed mb-6">
-              {{ aboutContent()!.companyStory }}
-            </p>
-            <p class="text-lg text-text leading-relaxed">
-              DLC Town Plan Services have expanded, resulting in a comprehensive capability of delivering services, 
-              not only in Gauteng and in South-Africa, but also into Africa and beyond. Clients range from individuals 
-              to large corporations including private landowners, developers, local and regional governments, mining 
-              and industrial sector companies.
-            </p>
-          </div>
-        }
+        <div class="prose prose-lg max-w-none">
+          <p class="text-lg text-text leading-relaxed mb-6">
+            With the depth of 30 years collective expertise, skills and resources embodied in the consultancy, we have the capabilities to successfully undertake - from inception to final delivery - the town-planning and project management aspects of any venture, from large sophisticated multi-disciplinary programs to small community projects. We have successfully dealt with the town-planning requirements of a wide range of projects, including residential, industrial, commercial, business as well as various other developments such as Life Style Estates, Eco Estates, Golf Estates and "Development & Reconstruction and Development Program" (RDP), Master Plans.
+          </p>
+          <p class="text-lg text-text leading-relaxed">
+            DLC Town Plan Services have expanded, resulting in a comprehensive capability of delivering services, 
+            not only in Gauteng and in South-Africa, but also into Africa and beyond. Clients range from individuals 
+            to large corporations including private landowners, developers, local and regional governments, mining 
+            and industrial sector companies.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -51,9 +49,7 @@
           </svg>
         </div>
         <h3 class="mb-4">Our Mission</h3>
-        @if (aboutContent()) {
-          <p class="text-muted">{{ aboutContent()!.mission }}</p>
-        }
+        <p class="text-muted">To deliver professional town planning and project management services across Africa, ensuring efficient, sustainable, and compliant development solutions from inception to completion.</p>
       </div>
       <div class="card p-8">
         <div class="w-12 h-12 mb-4 bg-teal rounded-full flex items-center justify-center">
@@ -63,9 +59,7 @@
           </svg>
         </div>
         <h3 class="mb-4">Our Vision</h3>
-        @if (aboutContent()) {
-          <p class="text-muted">{{ aboutContent()!.vision }}</p>
-        }
+        <p class="text-muted">To be recognized as Africa's most trusted and comprehensive town planning consultancy, known for technical excellence, professional integrity, and successful project delivery.</p>
       </div>
     </div>
   </div>

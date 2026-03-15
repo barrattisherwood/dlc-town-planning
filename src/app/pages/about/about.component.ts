@@ -15,7 +15,6 @@ import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-sp
 export class AboutComponent implements OnInit {
   private cmsService = inject(CmsService);
 
-  aboutContent = signal<AboutContent | null>(null);
   pillars = signal<Pillar[]>([]);
   loading = signal(true);
 
@@ -38,15 +37,6 @@ export class AboutComponent implements OnInit {
 
   loadContent() {
     // Placeholder data - in production would call CMS service
-    this.aboutContent.set({
-      id: '1',
-      companyStory: 'With the depth of 30 years collective expertise, skills and resources embodied in the consultancy, we have the capabilities to successfully undertake - from inception to final delivery - the town-planning and project management aspects of any venture, from large sophisticated multi-disciplinary programs to small community projects. We have successfully dealt with the town-planning requirements of a wide range of projects, including residential, industrial, commercial, business as well as various other developments such as Life Style Estates, Eco Estates, Golf Estates and "Development & Reconstruction and Development Program" (RDP), Master Plans.',
-      mission: 'To deliver professional town planning and project management services across Africa, ensuring efficient, sustainable, and compliant development solutions from inception to completion.',
-      vision: 'To be recognized as Africa\'s most trusted and comprehensive town planning consultancy, known for technical excellence, professional integrity, and successful project delivery.',
-      yearsEstablished: '1994',
-      accreditations: ['SACPLAN', 'SACLAP']
-    });
-
     this.pillars.set([
       { 
         id: '1', 
