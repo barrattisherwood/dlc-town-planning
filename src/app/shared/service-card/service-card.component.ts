@@ -1,6 +1,13 @@
 import { Component, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Service } from '../../services/cms.service';
+
+// Local interface for service card (works with both placeholder and CMS data)
+export interface ServiceCardData {
+  slug: string;
+  title: string;
+  summary: string;
+  icon?: string;
+}
 
 @Component({
   selector: 'app-service-card',
@@ -10,5 +17,5 @@ import { Service } from '../../services/cms.service';
   styleUrl: './service-card.component.scss'
 })
 export class ServiceCardComponent {
-  @Input({ required: true }) service!: Service;
+  @Input({ required: true }) service!: ServiceCardData;
 }

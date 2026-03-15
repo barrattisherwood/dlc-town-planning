@@ -7,19 +7,38 @@
   </div>
 } @else {
   <!-- Company Pillars Section -->
-  <section class="section-padding bg-white">
+  <section class="section-padding bg-gradient-to-b from-white to-gray-50">
     <div class="container-custom">
-      <h2 class="text-center mb-12">Why Choose DLC</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        @for (pillar of pillars(); track pillar.id) {
-          <div class="card p-8 text-center">
-            <div class="w-16 h-16 mx-auto mb-4 bg-teal rounded-full flex items-center justify-center">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-              </svg>
+      <div class="text-center mb-16">
+        <h2 class="mb-4">Why Choose DLC</h2>
+        <div class="w-20 h-1 bg-teal mx-auto rounded-full"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        @for (pillar of pillars(); track pillar.id; let i = $index) {
+          <div class="group relative">
+            <div class="card p-8 h-full text-center hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-teal/20 hover:-translate-y-1">
+              <!-- Icon with gradient background -->
+              <div class="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-teal to-teal-light rounded-2xl flex items-center justify-center transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-lg">
+                @if (i === 0) {
+                  <!-- Experience - Award Icon -->
+                  <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                } @else if (i === 1) {
+                  <!-- Professional - Users Icon -->
+                  <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                } @else {
+                  <!-- Comprehensive - Layers Icon -->
+                  <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                  </svg>
+                }
+              </div>
+              <h3 class="text-2xl mb-4 font-semibold text-navy group-hover:text-teal transition-colors">{{ pillar.title }}</h3>
+              <p class="text-muted leading-relaxed">{{ pillar.description }}</p>
             </div>
-            <h3 class="text-2xl mb-4">{{ pillar.title }}</h3>
-            <p class="text-muted">{{ pillar.description }}</p>
           </div>
         }
       </div>
@@ -27,70 +46,100 @@
   </section>
 
   <!-- Services Teaser Section -->
-  <section class="section-padding bg-navy">
-    <div class="container-custom">
-      <div class="text-center mb-12">
+  <section class="section-padding bg-navy relative overflow-hidden">
+    <!-- Subtle background pattern -->
+    <div class="absolute inset-0 opacity-5">
+      <div class="absolute inset-0" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);"></div>
+    </div>
+    
+    <div class="container-custom relative z-10">
+      <div class="text-center mb-16">
         <h2 class="mb-4 text-white">Our Services</h2>
-        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+        <div class="w-20 h-1 bg-teal-light mx-auto rounded-full mb-6"></div>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
           Comprehensive town planning and project management solutions
         </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         @for (service of services(); track service.id) {
           <app-service-card [service]="service" />
         }
       </div>
       <div class="text-center">
-        <a routerLink="/services" class="btn btn-outline border-white text-white hover:bg-white hover:text-navy">View All Services</a>
+        <a routerLink="/services" class="btn btn-outline border-white text-white hover:bg-white hover:text-navy text-lg px-8 py-3">View All Services</a>
       </div>
     </div>
   </section>
 
   <!-- Projects Teaser Section -->
-  <section class="section-padding bg-white">
+  <section class="section-padding bg-gradient-to-b from-gray-50 to-white">
     <div class="container-custom">
-      <div class="text-center mb-12">
+      <div class="text-center mb-16">
         <h2 class="mb-4">Featured Projects</h2>
-        <p class="text-xl text-muted max-w-2xl mx-auto">
+        <div class="w-20 h-1 bg-teal mx-auto rounded-full mb-6"></div>
+        <p class="text-xl text-muted max-w-2xl mx-auto leading-relaxed">
           Successful developments across southern Africa
         </p>
       </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
         @for (project of featuredProjects(); track project.id) {
           <app-project-card [project]="project" />
         }
       </div>
       <div class="text-center">
-        <a routerLink="/projects" class="btn btn-primary">View All Projects</a>
+        <a routerLink="/projects" class="btn btn-primary text-lg px-8 py-3">View All Projects</a>
       </div>
     </div>
   </section>
 
 <!-- About Strip Section -->
-<section class="section-padding bg-navy text-white">
-  <div class="container-custom text-center">
-    <h2 class="text-white mb-6">30 Years of Professional Excellence</h2>
-    <p class="text-xl text-gray-200 max-w-3xl mx-auto mb-8">
-      With the depth of 30 years collective expertise, skills and resources, DLC Town Planning has the capabilities 
-      to successfully undertake - from inception to final delivery - the town-planning and project management aspects 
-      of any venture. Our services extend across Gauteng, South Africa, and into Africa and beyond.
-    </p>
-    <a routerLink="/about" class="btn btn-outline border-white text-white hover:bg-white hover:text-navy">
-      Learn More About Us
-    </a>
+<section class="section-padding bg-navy text-white relative overflow-hidden">
+  <!-- Subtle background accent -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute inset-0" style="background-image: repeating-linear-gradient(-45deg, transparent, transparent 35px, rgba(255,255,255,.1) 35px, rgba(255,255,255,.1) 70px);"></div>
+  </div>
+  
+  <div class="container-custom text-center relative z-10">
+    <div class="max-w-4xl mx-auto">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-teal/20 rounded-full mb-6">
+        <svg class="w-8 h-8 text-teal-light" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+        </svg>
+      </div>
+      <h2 class="text-white mb-6">30 Years of Professional Excellence</h2>
+      <p class="text-xl text-gray-200 max-w-3xl mx-auto mb-10 leading-relaxed">
+        With the depth of 30 years collective expertise, skills and resources, DLC Town Planning has the capabilities 
+        to successfully undertake - from inception to final delivery - the town-planning and project management aspects 
+        of any venture. Our services extend across Gauteng, South Africa, and into Africa and beyond.
+      </p>
+      <a routerLink="/about" class="btn btn-outline border-white text-white hover:bg-white hover:text-navy text-lg px-8 py-3">
+        Learn More About Us
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- Contact CTA Section -->
-<section class="section-padding bg-teal text-white">
-  <div class="container-custom text-center">
-    <h2 class="text-white mb-6">Ready to Discuss Your Project?</h2>
-    <p class="text-xl mb-8 text-teal-light">
-      Get in touch with our team to explore how we can help bring your development vision to life
-    </p>
-    <a routerLink="/contact" class="btn btn-secondary">
-      Contact Us Today
-    </a>
+<section class="section-padding bg-gradient-to-br from-teal to-teal-light text-white relative overflow-hidden">
+  <!-- Decorative elements -->
+  <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+  
+  <div class="container-custom text-center relative z-10">
+    <div class="max-w-3xl mx-auto">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6 backdrop-blur-sm">
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <h2 class="text-white mb-6">Ready to Discuss Your Project?</h2>
+      <p class="text-xl mb-10 text-white/90 leading-relaxed">
+        Get in touch with our team to explore how we can help bring your development vision to life
+      </p>
+      <a routerLink="/contact" class="btn btn-secondary text-lg px-8 py-3 shadow-xl hover:shadow-2xl">
+        Contact Us Today
+      </a>
+    </div>
   </div>
 </section>
 }
