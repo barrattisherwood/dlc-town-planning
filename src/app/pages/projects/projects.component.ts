@@ -65,16 +65,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
     effect(() => {
       const mode = this.viewMode(); // Track dependency
       if (mode === 'split' || mode === 'map') {
-        setTimeout(() => {
-          const mapEl = document.getElementById('projects-map');
-          if (mapEl && !this.map) {
-            // Map element exists but map not initialized
-            this.initMap();
-          } else if (this.map) {
-            // Map exists, just resize it
-            this.map.invalidateSize();
-          }
-        }, 100);
+        // Wait for Angular to render the new DOM element before initializing
+        setTimeout(() => this.initMap(), 150);
       }
     });
   }
@@ -177,12 +169,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Switch to split view if in map mode
     if (this.viewMode() === 'map') {
-      this.viewMode.set('split');
-      // First resize the map
-      setTimeout(() => {
-        this.map?.invalidateSize();
-      }, 200);
-      // Then center after resize completes
+      this.setView('split');
+      // Center map after it reinitializes
       setTimeout(() => {
         if (project.latitude && project.longitude) {
           this.map?.setView([project.latitude, project.longitude], 10, { animate: true });
@@ -191,8 +179,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (this.map && project.latitude && project.longitude) {
       this.map.setView([project.latitude, project.longitude], 10, { animate: true });
     }
-
-    // Markers will refresh automatically via effect
 
     // Scroll detail panel to top
     setTimeout(() => {
@@ -208,12 +194,8 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // Switch to split view if in list mode
     if (this.viewMode() === 'list') {
-      this.viewMode.set('split');
-      // First resize the map
-      setTimeout(() => {
-        this.map?.invalidateSize();
-      }, 200);
-      // Then center after resize completes
+      this.setView('split');
+      // Center map after it reinitializes
       setTimeout(() => {
         if (project.latitude && project.longitude) {
           this.map?.setView([project.latitude, project.longitude], 10, { animate: true });
@@ -222,8 +204,6 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
     } else if (this.map && project.latitude && project.longitude) {
       this.map.setView([project.latitude, project.longitude], 10, { animate: true });
     }
-
-    // Markers will refresh automatically via effect
   }
 
   closeDetail(): void {
@@ -234,17 +214,19 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setView(mode: ViewMode): void {
-    // Clear active project when switching views
+    // Clear active project when switching to list
     if (mode === 'list') {
       this.activeProject.set(null);
-      // Clean up map when switching to list view
-      if (this.map) {
-        this.map.remove();
-        this.map = undefined;
-      }
+    }
+    // Always destroy the map when changing views — the DOM element gets
+    // recreated by Angular so we must reinitialize Leaflet on the new element
+    if (this.map) {
+      this.map.remove();
+      this.map = undefined;
+      this.markers.clear();
     }
     this.viewMode.set(mode);
-    // Map will be reinitialized by effect when switching to split/map view
+    // Effect will reinitialize the map when mode is split or map
   }
 
   setRegion(region: string): void {
