@@ -113,7 +113,27 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private refreshMarkers(): void {
-    if (!this.map) return;
+    if (!this.map) {
+      // Map may not be initialized yet — try to init if element exists
+      const mode = this.viewMode();
+      if (mode === 'split' || mode === 'map') {
+        this.initMap();
+      }
+      return;
+    }
+
+    // If the map container has been removed from the DOM (e.g. empty-state replaced it),
+    // destroy the stale instance and reinitialize on the new element
+    if (!document.body.contains(this.map.getContainer())) {
+      this.map.remove();
+      this.map = undefined;
+      this.markers.clear();
+      const mode = this.viewMode();
+      if (mode === 'split' || mode === 'map') {
+        this.initMap();
+      }
+      return;
+    }
 
     // Clear existing markers
     this.markers.forEach(marker => marker.remove());
