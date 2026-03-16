@@ -60,6 +60,23 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       // Use setTimeout to ensure effect runs after render
       setTimeout(() => this.refreshMarkers(), 0);
     });
+
+    // Reinitialize map when switching to a view mode that needs it
+    effect(() => {
+      const mode = this.viewMode(); // Track dependency
+      if (mode === 'split' || mode === 'map') {
+        setTimeout(() => {
+          const mapEl = document.getElementById('projects-map');
+          if (mapEl && !this.map) {
+            // Map element exists but map not initialized
+            this.initMap();
+          } else if (this.map) {
+            // Map exists, just resize it
+            this.map.invalidateSize();
+          }
+        }, 100);
+      }
+    });
   }
 
   ngOnInit() {
@@ -79,6 +96,12 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   private initMap(): void {
     const mapEl = document.getElementById('projects-map');
     if (!mapEl) return;
+
+    // Clean up existing map if it exists
+    if (this.map) {
+      this.map.remove();
+      this.map = undefined;
+    }
 
     this.map = L.map(mapEl, {
       center: [-1.286389, 36.817223], // Nairobi
@@ -214,11 +237,14 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
     // Clear active project when switching views
     if (mode === 'list') {
       this.activeProject.set(null);
+      // Clean up map when switching to list view
+      if (this.map) {
+        this.map.remove();
+        this.map = undefined;
+      }
     }
     this.viewMode.set(mode);
-    setTimeout(() => {
-      this.map?.invalidateSize();
-    }, 100);
+    // Map will be reinitialized by effect when switching to split/map view
   }
 
   setRegion(region: string): void {
