@@ -144,12 +144,12 @@
   .project-list {
     width: 38%;
     overflow-y: auto;
-    padding: 1.5rem 1rem;
+    padding: 1rem 0.75rem;
     background: var(--off-white);
     border-right: 1px solid var(--warm-grey);
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 0.5rem;
   }
 
   .project-detail-panel {
@@ -427,62 +427,68 @@
 // Compact card (split mode)
 .compact-card {
   display: flex;
-  height: 140px;
+  align-items: stretch;
+  min-height: 80px;
   position: relative;
 
-  .card-image {
-    width: 160px;
-    min-width: 160px;
-    background: var(--warm-grey);
-    position: relative;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s;
-    }
+  .compact-accent {
+    width: 4px;
+    min-width: 4px;
+    background: var(--teal);
+    border-radius: 4px 0 0 4px;
+    opacity: 0.3;
+    transition: opacity 0.2s;
   }
 
-  &:hover .card-image img {
-    transform: scale(1.05);
+  &:hover .compact-accent,
+  &.is-active .compact-accent {
+    opacity: 1;
   }
 
   .card-content {
-    padding: 1.125rem 1rem;
+    padding: 0.875rem 0.875rem 0.875rem 1rem;
     flex: 1;
     min-width: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 0.35rem;
+  }
+
+  .card-category {
+    font-size: 0.7rem;
+    color: var(--teal);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
   }
 
   .card-title {
-    font-size: 1.05rem;
+    font-size: 0.975rem;
     font-weight: 600;
     color: var(--navy);
-    margin: 0.4rem 0 0.3rem;
+    margin: 0;
+    line-height: 1.35;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     white-space: normal;
-    line-height: 1.3;
   }
 
-  .card-category {
-    font-size: 0.75rem;
+  .compact-arrow {
+    display: flex;
+    align-items: center;
+    padding-right: 0.75rem;
+    color: var(--warm-grey);
+    transition: color 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  &:hover .compact-arrow {
     color: var(--teal);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    display: inline-block;
-    padding: 0.25rem 0.5rem;
-    background: rgba(14, 124, 114, 0.08);
-    border-radius: 4px;
-    align-self: flex-start;
+    transform: translateX(2px);
   }
 }
 

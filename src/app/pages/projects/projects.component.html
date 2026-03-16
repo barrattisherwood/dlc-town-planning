@@ -202,18 +202,16 @@
     } @else {
       <!-- Compact Cards List -->
       <div class="project-list">
-        @for (project of filteredProjects(); track project.id) {
+        @for (project of filteredProjects(); track project.id; let i = $index) {
           <article 
             class="project-card compact-card"
             [id]="'project-' + project.id"
             (click)="onCardClick(project)"
           >
-            @if (firstImage(project)) {
-              <div class="card-image">
-                <img [src]="firstImage(project)" [alt]="project.title" />
-              </div>
-            }
+            <div class="compact-accent"></div>
             <div class="card-content">
+              <span class="card-category">{{ project.category }}</span>
+              <h3 class="card-title">{{ project.title }}</h3>
               <div class="card-location">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
@@ -221,8 +219,11 @@
                 </svg>
                 <span>{{ project.location }}</span>
               </div>
-              <h3 class="card-title">{{ project.title }}</h3>
-              <p class="card-category">{{ project.category }}</p>
+            </div>
+            <div class="compact-arrow">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
             </div>
           </article>
         }
