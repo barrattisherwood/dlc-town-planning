@@ -48,6 +48,7 @@ export class ContactComponent {
       const formData = {
         site: 'dlc-townplanning',
         form: 'contact',
+        recipient: 'fj@dlcgroup.co.za',
         data: this.contactForm.value
       };
 

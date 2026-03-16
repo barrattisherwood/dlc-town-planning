@@ -11,31 +11,21 @@
 <!-- Filter Bar -->
 <div class="filter-bar">
   <div class="container-custom">
-    <!-- Region Pills -->
+    <!-- Category Pills -->
     <div class="filter-pills">
-      @for (region of regions; track region) {
-        <button 
+      @for (cat of categories; track cat) {
+        <button
           class="pill-btn"
-          [class.active]="regionFilter() === region"
-          (click)="setRegion(region)"
+          [class.active]="categoryFilter() === cat"
+          (click)="setCategory(cat)"
         >
-          {{ regionLabel(region) }}
+          {{ categoryLabel(cat) }}
         </button>
       }
     </div>
 
     <!-- Controls -->
     <div class="filter-controls">
-      <!-- Category Select -->
-      <select 
-        class="category-select"
-        [value]="categoryFilter()"
-        (change)="setCategory($any($event.target).value)"
-      >
-        @for (cat of categories; track cat) {
-          <option [value]="cat">{{ categoryLabel(cat) }}</option>
-        }
-      </select>
 
       <!-- View Toggle -->
       <div class="view-toggle">

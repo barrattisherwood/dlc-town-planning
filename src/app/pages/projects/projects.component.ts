@@ -24,25 +24,18 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   loading = signal(true);
   activeProject = signal<Project | null>(null);
   viewMode = signal<ViewMode>('split');
-  regionFilter = signal<string>('all');
   categoryFilter = signal<string>('all');
 
   // Leaflet map
   private map?: L.Map;
   private markers: Map<string, L.CircleMarker> = new Map();
 
-  // Available filters
-  regions = ['all', 'East Africa', 'Southern Africa', 'West Africa', 'Central Africa'];
-  categories = ['all', 'Residential', 'Commercial', 'Industrial', 'Mixed-Use', 'Municipal'];
+  // Service-based categories
+  categories = ['all', 'Master Planning', 'Township Establishment', 'Rezoning', 'Consent Use', 'Subdivision', 'Project Management', 'Municipal Planning'];
 
   // Computed filtered projects
   filteredProjects = computed(() => {
     let filtered = this.projects();
-
-    const region = this.regionFilter();
-    if (region !== 'all') {
-      filtered = filtered.filter(p => p.region === region);
-    }
 
     const category = this.categoryFilter();
     if (category !== 'all') {
@@ -249,28 +242,18 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
     // Effect will reinitialize the map when mode is split or map
   }
 
-  setRegion(region: string): void {
-    this.regionFilter.set(region);
-    // Markers will refresh automatically via effect
-  }
-
   setCategory(category: string): void {
     this.categoryFilter.set(category);
     // Markers will refresh automatically via effect
   }
 
   clearFilters(): void {
-    this.regionFilter.set('all');
     this.categoryFilter.set('all');
     // Markers will refresh automatically via effect
   }
 
   categoryLabel(cat: string): string {
-    return cat === 'all' ? 'All Categories' : cat;
-  }
-
-  regionLabel(reg: string): string {
-    return reg === 'all' ? 'All Regions' : reg;
+    return cat === 'all' ? 'All Projects' : cat;
   }
 
   firstImage(project: Project): string {
@@ -305,7 +288,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         location: 'Nairobi, Kenya',
         region: 'East Africa',
         country: 'Kenya',
-        category: 'Mixed-Use',
+        category: 'Master Planning',
         description: 'DLC Town Plan takes immense pride in its integral role in shaping and orchestrating the development of TATU City. The essence of Tatu City\'s aspiration lies in the conception of an unparalleled, world-class mixed-use urban center—a pioneering endeavor within the African landscape. At its core, this vision revolves around the "live-work-play" concept, aimed at cultivating a dynamic, decentralized hub to the north of Nairobi City.',
         latitude: -1.1300733303582884,
         longitude: 36.90225918872897,
@@ -320,7 +303,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         location: 'Sandton, Johannesburg',
         region: 'Southern Africa',
         country: 'South Africa',
-        category: 'Mixed-Use',
+        category: 'Township Establishment',
         description: 'Large-scale urban renewal project combining residential, commercial, and retail components in the heart of Johannesburg\'s financial district. This development brings together world-class amenities and sustainable design principles.',
         latitude: -26.107734,
         longitude: 28.056847,
@@ -334,7 +317,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         location: 'V&A Waterfront, Cape Town',
         region: 'Southern Africa',
         country: 'South Africa',
-        category: 'Residential',
+        category: 'Rezoning',
         description: 'Luxury residential development with 200+ units and world-class amenities overlooking Table Bay. Features include a rooftop pool, gym, concierge services, and direct access to the waterfront promenade.',
         latitude: -33.9031,
         longitude: 18.4200,
@@ -348,7 +331,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         location: 'Durban South, KwaZulu-Natal',
         region: 'Southern Africa',
         country: 'South Africa',
-        category: 'Industrial',
+        category: 'Township Establishment',
         description: 'Strategic industrial zone development with modern logistics facilities designed to support the growing manufacturing and export sectors in the region.',
         latitude: -29.9844,
         longitude: 30.9292,
@@ -361,7 +344,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         location: 'Centurion, Pretoria',
         region: 'Southern Africa',
         country: 'South Africa',
-        category: 'Commercial',
+        category: 'Rezoning',
         description: 'Grade-A office park development with sustainable design features including solar panels, rainwater harvesting, and green building certifications.',
         latitude: -25.8646,
         longitude: 28.1829,
@@ -373,7 +356,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         location: 'Stellenbosch, Western Cape',
         region: 'Southern Africa',
         country: 'South Africa',
-        category: 'Residential',
+        category: 'Consent Use',
         description: 'Boutique estate development in the heart of the Winelands, featuring Mediterranean-inspired architecture and vineyard views.',
         latitude: -33.9321,
         longitude: 18.8602,
@@ -385,7 +368,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         location: 'Port Elizabeth, Eastern Cape',
         region: 'Southern Africa',
         country: 'South Africa',
-        category: 'Municipal',
+        category: 'Municipal Planning',
         description: 'Social housing township development with community facilities including schools, clinics, and recreational spaces designed to foster community development.',
         latitude: -33.9608,
         longitude: 25.6022,
@@ -397,7 +380,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         location: 'Midrand, Gauteng',
         region: 'Southern Africa',
         country: 'South Africa',
-        category: 'Industrial',
+        category: 'Subdivision',
         description: 'Modern logistics and warehousing facility development strategically located between Johannesburg and Pretoria with access to major highways.',
         latitude: -25.9953,
         longitude: 28.1288,
@@ -409,7 +392,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         location: 'Umhlanga, KwaZulu-Natal',
         region: 'Southern Africa',
         country: 'South Africa',
-        category: 'Commercial',
+        category: 'Project Management',
         description: 'Regional shopping centre with entertainment and dining precinct, featuring over 150 stores, cinema complex, and family entertainment facilities.',
         latitude: -29.7286,
         longitude: 31.0821,

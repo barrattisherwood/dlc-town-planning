@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     this.services.set([
       { id: '1', slug: 'land-use-planning', title: 'Land Use Planning', summary: 'Comprehensive land use and zoning solutions', description: '', icon: 'land' },
       { id: '2', slug: 'township-establishment', title: 'Township Establishment', summary: 'Expert guidance through township development processes', description: '', icon: 'township' },
-      { id: '3', slug: 'environmental-planning', title: 'Environmental Planning', summary: 'Sustainable environmental impact assessments', description: '', icon: 'environment' }
+      { id: '3', slug: 'master-planning', title: 'Master Planning', summary: 'Comprehensive master plans for integrated large-scale developments', description: '', icon: 'masterplan' }
     ]);
 
     // Featured projects with real data

@@ -44,11 +44,11 @@ export class ServicesComponent implements OnInit {
       },
       {
         id: '3',
-        slug: 'environmental-planning',
-        title: 'Environmental Planning',
-        summary: 'Sustainable environmental impact assessments and management',
-        description: 'Environmental authorization, impact studies, and sustainability consulting.',
-        icon: 'environment'
+        slug: 'master-planning',
+        title: 'Master Planning',
+        summary: 'Comprehensive master plans for large-scale integrated developments',
+        description: 'Holistic spatial planning for mixed-use developments, estates, and urban growth nodes — from concept through to stakeholder approval.',
+        icon: 'masterplan'
       },
       {
         id: '4',
