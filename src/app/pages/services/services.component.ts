@@ -28,22 +28,6 @@ export class ServicesComponent implements OnInit {
     this.services.set([
       {
         id: '1',
-        slug: 'land-use-planning',
-        title: 'Land Use Planning',
-        summary: 'Comprehensive land use and zoning solutions for sustainable development',
-        description: 'Expert guidance on land use applications, rezoning, and spatial planning compliance.',
-        icon: 'land'
-      },
-      {
-        id: '2',
-        slug: 'township-establishment',
-        title: 'Township Establishment',
-        summary: 'Full-service township development from concept to approval',
-        description: 'Navigate complex regulatory requirements for township establishment and subdivision.',
-        icon: 'township'
-      },
-      {
-        id: '3',
         slug: 'master-planning',
         title: 'Master Planning',
         summary: 'Comprehensive master plans for large-scale integrated developments',
@@ -51,7 +35,55 @@ export class ServicesComponent implements OnInit {
         icon: 'masterplan'
       },
       {
+        id: '2',
+        slug: 'township-establishment',
+        title: 'Township Establishment',
+        summary: 'Full-service township development from concept to approval',
+        description: 'Applications in terms of Town-Planning and Townships Ordinance and other legislation, navigating complex regulatory requirements.',
+        icon: 'township'
+      },
+      {
+        id: '3',
+        slug: 'rezoning',
+        title: 'Rezoning Applications',
+        summary: 'Section 56 applications and rezoning under various legislative frameworks',
+        description: 'Expert management of rezoning applications to unlock the full development potential of your land.',
+        icon: 'rezoning'
+      },
+      {
         id: '4',
+        slug: 'consent-use',
+        title: 'Consent Use Applications',
+        summary: 'Consent use applications in terms of applicable Town-Planning Schemes',
+        description: 'Facilitating consent use approvals to enable compatible land uses within existing zoning frameworks.',
+        icon: 'consent'
+      },
+      {
+        id: '5',
+        slug: 'subdivision-consolidation',
+        title: 'Subdivision & Consolidation',
+        summary: 'Land subdivision and consolidation of erven for optimal development',
+        description: 'Subdivision under the Agricultural Land Act and Division of Land Ordinance, and Section 92 consolidation applications.',
+        icon: 'subdivision'
+      },
+      {
+        id: '6',
+        slug: 'removal-of-restrictions',
+        title: 'Removal of Restrictions',
+        summary: 'Title condition removals under the Gauteng Removal of Restrictions Act',
+        description: 'Clearing restrictive title deed conditions and servitudes that limit development potential.',
+        icon: 'restrictions'
+      },
+      {
+        id: '7',
+        slug: 'land-use-planning',
+        title: 'Land Use Planning',
+        summary: 'Comprehensive land use and zoning solutions for sustainable development',
+        description: 'Expert guidance on land use applications and spatial planning compliance.',
+        icon: 'land'
+      },
+      {
+        id: '8',
         slug: 'municipal-planning',
         title: 'Municipal Planning',
         summary: 'Strategic planning support for local government',
@@ -59,20 +91,36 @@ export class ServicesComponent implements OnInit {
         icon: 'municipal'
       },
       {
-        id: '5',
+        id: '9',
         slug: 'project-management',
         title: 'Project Management',
         summary: 'End-to-end development project coordination',
-        description: 'Professional project management from inception through to completion.',
+        description: 'Advisory services and complete project management from inception through to completion.',
         icon: 'project'
       },
       {
-        id: '6',
+        id: '10',
         slug: 'heritage-impact',
         title: 'Heritage Impact Assessments',
         summary: 'Cultural heritage evaluation and compliance',
         description: 'Heritage impact studies and compliance with national heritage legislation.',
         icon: 'heritage'
+      },
+      {
+        id: '11',
+        slug: 'social-housing',
+        title: 'Social Housing & Tenure',
+        summary: 'Sustainable settlement and tenure upgrading projects',
+        description: 'Planning support for social housing developments and informal settlement upgrades.',
+        icon: 'social'
+      },
+      {
+        id: '12',
+        slug: 'land-reform',
+        title: 'Land Reform',
+        summary: 'Comprehensive land reform and development initiatives',
+        description: 'Facilitating land reform projects, redistributive land development, and community planning.',
+        icon: 'reform'
       }
     ]);
 
