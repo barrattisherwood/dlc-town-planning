@@ -1,160 +1,228 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { CmsService } from '../../services/cms.service';
 import { Service } from '../../models/project.model';
+import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-service-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, LoadingSpinnerComponent],
   templateUrl: './service-detail.component.html',
   styleUrl: './service-detail.component.scss'
 })
 export class ServiceDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private cmsService = inject(CmsService);
 
   service = signal<Service | null>(null);
   loading = signal(true);
-  slug = signal('');
 
-  // Mock services data
   private servicesData: { [key: string]: Service } = {
+    'master-planning': {
+      id: '1', slug: 'master-planning', title: 'Master Planning',
+      summary: 'Comprehensive master plans for large-scale integrated developments',
+      description: 'We develop holistic spatial master plans for large-scale mixed-use developments, estates, and urban growth nodes. From conceptual vision through to stakeholder approvals, our master plans provide a framework for phased development that is financially viable, spatially coherent, and regulatory compliant.',
+      icon: 'masterplan',
+      features: [
+        'Conceptual layout and spatial planning',
+        'Mixed-use integration strategies',
+        'Phased development frameworks',
+        'Infrastructure and bulk services planning',
+        'Stakeholder engagement and approvals',
+        'Development rights optimisation',
+        'Urban design guidelines',
+        'Economic feasibility input',
+      ]
+    },
     'land-use-planning': {
-      id: '1',
-      slug: 'land-use-planning',
-      title: 'Land Use Planning',
+      id: '7', slug: 'land-use-planning', title: 'Land Use Planning',
       summary: 'Comprehensive land use and zoning solutions for sustainable development',
-      description: `<h3>Expert Land Use Planning Services</h3>
-        <p>Our land use planning services provide comprehensive solutions for property development, rezoning applications, and land use management. We work closely with clients to navigate municipal regulations and ensure compliance with spatial planning frameworks.</p>
-        <h4>Key Services Include:</h4>
-        <ul>
-          <li>Rezoning applications and appeals</li>
-          <li>Land use management applications</li>
-          <li>Spatial planning and zoning advice</li>
-          <li>Municipal liaison and representation</li>
-          <li>Development feasibility studies</li>
-        </ul>
-        <p>Our team has extensive experience working with municipalities across South Africa, ensuring efficient processing and favorable outcomes for our clients.</p>`,
-      icon: 'land'
+      description: 'Our land use planning services provide comprehensive solutions for property development, zoning advice, and regulatory compliance. We guide clients from initial land use assessment through to approved development rights, navigating the complexity of municipal planning frameworks.',
+      icon: 'land',
+      features: [
+        'Land use rights assessment',
+        'Zoning scheme interpretation',
+        'Spatial planning compliance advice',
+        'Development rights optimisation',
+        'Municipal policy engagement',
+        'Land use management applications',
+        'Land capability and suitability studies',
+        'Due diligence assessments',
+      ]
     },
     'township-establishment': {
-      id: '2',
-      slug: 'township-establishment',
-      title: 'Township Establishment',
-      summary: 'Full-service township development from concept to approval',
-      description: `<h3>Township Establishment & Subdivision</h3>
-        <p>We guide clients through the complex process of township establishment, from initial concept through to final proclamation. Our comprehensive service covers all aspects of the development process.</p>
-        <h4>Our Process:</h4>
-        <ul>
-          <li>Feasibility studies and site analysis</li>
-          <li>Township layout and engineering design coordination</li>
-          <li>Environmental authorization management</li>
-          <li>Municipal and provincial application processes</li>
-          <li>Public participation coordination</li>
-          <li>Subdivision and consolidation applications</li>
-        </ul>
-        <p>With decades of experience in township development, we ensure your project meets all regulatory requirements while optimizing development potential.</p>`,
-      icon: 'township'
+      id: '2', slug: 'township-establishment', title: 'Township Establishment',
+      summary: 'Full-service township development from concept to proclamation',
+      description: 'We guide clients through the full township establishment process — from initial site analysis and layout design through to municipal and provincial approval and final proclamation. Our team coordinates all required technical disciplines to ensure a smooth and compliant process.',
+      icon: 'township',
+      features: [
+        'Site analysis and feasibility studies',
+        'Township layout and design',
+        'SPLUMA and Ordinance applications',
+        'Engineering coordination',
+        'Environmental authorisation management',
+        'Public participation processes',
+        'Subdivision and consolidation applications',
+        'Proclamation and title deed registration',
+      ]
     },
-    'environmental-planning': {
-      id: '3',
-      slug: 'environmental-planning',
-      title: 'Environmental Planning',
-      summary: 'Sustainable environmental impact assessments and management',
-      description: `<h3>Environmental Planning & Authorization</h3>
-        <p>Our environmental planning services ensure your development complies with environmental legislation while promoting sustainable development practices.</p>
-        <h4>Services Offered:</h4>
-        <ul>
-          <li>Environmental Impact Assessments (EIA)</li>
-          <li>Basic Assessments (BA)</li>
-          <li>Environmental Management Programmes (EMPr)</li>
-          <li>Water use license applications</li>
-          <li>Environmental compliance auditing</li>
-          <li>Sustainability consulting</li>
-        </ul>
-        <p>We work with qualified environmental consultants to deliver comprehensive assessments that meet NEMA requirements and support sustainable development goals.</p>`,
-      icon: 'environment'
+    'rezoning': {
+      id: '3', slug: 'rezoning', title: 'Rezoning Applications',
+      summary: 'Section 56 applications and rezoning under various legislative frameworks',
+      description: 'We manage the full rezoning application process to unlock the development potential of your land. Our team prepares and motivates applications under SPLUMA, LUPA, and applicable town-planning schemes, liaising with municipalities to achieve favourable outcomes.',
+      icon: 'rezoning',
+      features: [
+        'Rezoning application preparation',
+        'Motivated planning reports',
+        'Municipal liaison and representation',
+        'Section 56 and LUPA applications',
+        'Objection management',
+        'Appeal processes',
+        'Zoning certificate applications',
+        'Land use motivation reports',
+      ]
+    },
+    'consent-use': {
+      id: '4', slug: 'consent-use', title: 'Consent Use Applications',
+      summary: 'Applications for land uses that require consent within existing zoning',
+      description: 'Consent use applications allow compatible land uses that fall outside the primary rights of a zone. We prepare, motivate and submit consent use applications in terms of applicable town-planning schemes, guiding clients through the municipal process from submission to approval.',
+      icon: 'consent',
+      features: [
+        'Consent use planning reports',
+        'Town-planning scheme interpretation',
+        'Municipal application management',
+        'Neighbour notification coordination',
+        'Objection and appeal handling',
+        'Conditions of approval compliance',
+        'Site development plan support',
+        'Mixed-use consents',
+      ]
+    },
+    'subdivision-consolidation': {
+      id: '5', slug: 'subdivision-consolidation', title: 'Subdivision & Consolidation',
+      summary: 'Land subdivision and consolidation for optimal development outcomes',
+      description: 'We manage applications for the subdivision of land and consolidation of erven under applicable legislation, including the Agricultural Land Act, the Division of Land Ordinance, and Section 92 of the Town-Planning Ordinance. Our team handles the full process from layout design to conditions compliance.',
+      icon: 'subdivision',
+      features: [
+        'Subdivision layout design',
+        'Agricultural land subdivision (ALAct)',
+        'Division of Land Ordinance applications',
+        'Consolidation of erven (Sec 92)',
+        'Conditions of establishment compliance',
+        'Servitude and easement management',
+        'Survey and registration coordination',
+        'Re-subdivision applications',
+      ]
+    },
+    'removal-of-restrictions': {
+      id: '6', slug: 'removal-of-restrictions', title: 'Removal of Restrictions',
+      summary: 'Clearing title deed conditions that limit your development potential',
+      description: 'Restrictive title deed conditions and servitudes can significantly limit what you can do with your property. We manage the application process for the removal of restrictions under the Gauteng Removal of Restrictions Act and other applicable legislation, freeing up your land for its intended use.',
+      icon: 'restrictions',
+      features: [
+        'Title deed condition analysis',
+        'Removal of Restrictions Act applications',
+        'Servitude cancellations',
+        'Building line relaxations',
+        'Site coverage and FAR relaxations',
+        'Neighbour notification and mediation',
+        'Municipal approval management',
+        'Conveyancer coordination',
+      ]
     },
     'municipal-planning': {
-      id: '4',
-      slug: 'municipal-planning',
-      title: 'Municipal Planning',
-      summary: 'Strategic planning support for local government',
-      description: `<h3>Municipal & Strategic Planning</h3>
-        <p>We partner with municipalities and local government to develop spatial planning frameworks and strategic development plans that guide sustainable urban growth.</p>
-        <h4>Municipal Services:</h4>
-        <ul>
-          <li>Spatial Development Frameworks (SDF)</li>
-          <li>Integrated Development Plans (IDP)</li>
-          <li>Land Use Management Schemes (LUMS)</li>
-          <li>Urban design frameworks</li>
-          <li>Policy development and review</li>
-          <li>Capacity building and training</li>
-        </ul>
-        <p>Our municipal planning expertise helps local government create enabling environments for investment while protecting community interests.</p>`,
-      icon: 'municipal'
+      id: '8', slug: 'municipal-planning', title: 'Municipal Planning',
+      summary: 'Strategic spatial planning support for local government',
+      description: 'We partner with municipalities and local government to develop spatial planning frameworks that guide sustainable urban growth, stimulate investment, and protect community interests. Our municipal planning team brings both technical excellence and practical implementation experience.',
+      icon: 'municipal',
+      features: [
+        'Spatial Development Frameworks (SDF)',
+        'Integrated Development Plans (IDP)',
+        'Land Use Management Schemes (LUMS)',
+        'Urban design frameworks',
+        'Policy development and review',
+        'Development facilitation',
+        'Capacity building and training',
+        'Settlement planning',
+      ]
     },
     'project-management': {
-      id: '5',
-      slug: 'project-management',
-      title: 'Project Management',
-      summary: 'End-to-end development project coordination',
-      description: `<h3>Development Project Management</h3>
-        <p>Our project management services ensure your development progresses smoothly from conception through to completion, coordinating all technical and administrative aspects.</p>
-        <h4>What We Manage:</h4>
-        <ul>
-          <li>Project planning and programming</li>
-          <li>Multi-disciplinary team coordination</li>
-          <li>Budget and timeline management</li>
-          <li>Stakeholder communication</li>
-          <li>Risk identification and mitigation</li>
-          <li>Quality control and compliance monitoring</li>
-        </ul>
-        <p>With proven project management methodologies, we deliver developments on time, within budget, and to specification.</p>`,
-      icon: 'project'
+      id: '9', slug: 'project-management', title: 'Project Management',
+      summary: 'End-to-end development project coordination from inception to completion',
+      description: 'Our project management services ensure your development progresses smoothly from concept through to completion, coordinating all technical disciplines and administrative processes. We apply proven methodologies to deliver projects on time, within budget, and to specification.',
+      icon: 'project',
+      features: [
+        'Project planning and programming',
+        'Multi-disciplinary team coordination',
+        'Budget and cost management',
+        'Timeline and schedule management',
+        'Stakeholder communication',
+        'Risk identification and mitigation',
+        'Quality control and compliance',
+        'Reporting and documentation',
+      ]
     },
     'heritage-impact': {
       id: '6',
       slug: 'heritage-impact',
       title: 'Heritage Impact Assessments',
-      summary: 'Cultural heritage evaluation and compliance',
-      description: `<h3>Heritage Impact Assessments</h3>
-        <p>We conduct comprehensive heritage impact assessments to identify and protect cultural and historical resources in development areas.</p>
-        <h4>Assessment Services:</h4>
-        <ul>
-          <li>Phase 1 heritage impact assessments</li>
-          <li>Archaeological impact assessments</li>
-          <li>Paleontological impact assessments</li>
-          <li>Heritage permit applications</li>
-          <li>SAHRA and provincial heritage authority liaison</li>
-          <li>Heritage management plans</li>
-        </ul>
-        <p>Our network of heritage specialists ensures compliance with national heritage legislation while respecting cultural significance.</p>`,
-      icon: 'heritage'
-    }
+      summary: 'Cultural heritage evaluation and compliance with national legislation',
+      description: 'We conduct comprehensive heritage impact assessments to identify, evaluate, and mitigate impacts on cultural and historical resources in development areas. Our network of heritage specialists ensures compliance with the National Heritage Resources Act and all applicable legislation.',
+      icon: 'heritage',
+      features: [
+        'Phase 1 heritage impact assessments',
+        'Archaeological impact assessments',
+        'Paleontological impact assessments',
+        'SAHRA and provincial authority liaison',
+        'Heritage permit applications',
+        'Heritage management plans',
+        'Mitigation strategy development',
+        'Built environment heritage assessments',
+      ]
+    },
+    'social-housing': {
+      id: '11', slug: 'social-housing', title: 'Social Housing & Tenure',
+      summary: 'Planning support for sustainable social housing and tenure upgrading',
+      description: 'We provide town planning and project management support for social housing developments, informal settlement upgrades, and tenure enhancement projects. Our team brings experience in community consultation, regulatory compliance, and governmental programme requirements.',
+      icon: 'social',
+      features: [
+        'Social housing site planning',
+        'Informal settlement upgrades',
+        'Tenure upgrading applications',
+        'Community engagement support',
+        'NHFC and SHRA programme alignment',
+        'Housing chapter input (IDP)',
+        'RDP and BNG project management',
+        'Community facility integration',
+      ]
+    },
+    'land-reform': {
+      id: '12', slug: 'land-reform', title: 'Land Reform',
+      summary: 'Facilitating land reform, redistributive development, and community planning',
+      description: 'We support land reform initiatives through professional town planning, project management, and community engagement services. Our team works closely with government, communities, and private sector partners to achieve equitable and productive land reform outcomes.',
+      icon: 'reform',
+      features: [
+        'Land reform project planning',
+        'Redistribution programme support',
+        'Agricultural land subdivision',
+        'Community settlement planning',
+        'Land claims processing support',
+        'Restitution development planning',
+        'Spatial planning for land reform areas',
+        'Stakeholder engagement',
+      ]
+    },
   };
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.slug.set(params['slug']);
       this.loadService(params['slug']);
     });
   }
 
   loadService(slug: string) {
     this.loading.set(true);
-    
-    // In production, this would call: this.cmsService.getServiceBySlug(slug)
-    const serviceData = this.servicesData[slug];
-    
-    if (serviceData) {
-      this.service.set(serviceData);
-    } else {
-      this.service.set(null);
-    }
-    
+    this.service.set(this.servicesData[slug] ?? null);
     this.loading.set(false);
   }
 }

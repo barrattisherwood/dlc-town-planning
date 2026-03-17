@@ -37,6 +37,7 @@ export interface Service {
   category?: string;
   featured?: boolean;
   order?: number;
+  features?: string[];
 }
 
 /**

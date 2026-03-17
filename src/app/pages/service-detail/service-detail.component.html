@@ -1,12 +1,13 @@
 @if (loading()) {
   <div class="min-h-screen flex items-center justify-center">
-    <p class="text-muted">Loading...</p>
+    <app-loading-spinner size="lg" color="teal" />
   </div>
 } @else if (service()) {
+
   <!-- Page Hero -->
   <section class="bg-navy text-white py-20">
     <div class="container-custom">
-      <nav class="text-sm mb-4">
+      <nav class="text-sm mb-6">
         <a routerLink="/" class="text-teal-light hover:text-teal">Home</a>
         <span class="mx-2 text-gray-400">/</span>
         <a routerLink="/services" class="text-teal-light hover:text-teal">Services</a>
@@ -14,49 +15,119 @@
         <span class="text-gray-300">{{ service()!.title }}</span>
       </nav>
       <h1 class="text-white mb-4">{{ service()!.title }}</h1>
-      <p class="text-xl text-gray-200 max-w-3xl">
-        {{ service()!.summary }}
-      </p>
+      <p class="text-xl text-gray-200 max-w-3xl">{{ service()!.summary }}</p>
     </div>
   </section>
 
-  <!-- Service Content -->
+  <!-- Teal accent bar -->
+  <div class="h-1.5 bg-gradient-to-r from-teal to-teal-light"></div>
+
+  <!-- Main Content -->
   <section class="section-padding bg-white">
     <div class="container-custom">
-      <div class="max-w-4xl mx-auto">
-        <div class="prose prose-lg max-w-none" [innerHTML]="service()!.description"></div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+        <!-- Left: description + features -->
+        <div class="lg:col-span-2">
+          <h2 class="mb-6">Overview</h2>
+          <p class="text-lg text-muted leading-relaxed">{{ service()!.description }}</p>
+
+          @if (service()!.features && service()!.features!.length > 0) {
+            <div class="mt-10">
+              <h3 class="mb-6">What We Offer</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                @for (feature of service()!.features!; track feature) {
+                  <div class="flex items-start gap-3 p-4 bg-off-white rounded-xl border border-gray-100">
+                    <div class="w-6 h-6 bg-teal rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                      </svg>
+                    </div>
+                    <p class="text-sm font-medium text-navy leading-snug">{{ feature }}</p>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Right: sticky sidebar -->
+        <div>
+          <div class="card p-6 border-t-4 border-teal sticky top-6">
+            <h4 class="mb-2 text-navy">Ready to get started?</h4>
+            <p class="text-sm text-muted mb-5 leading-relaxed">
+              Speak to our team about your project and how we can help with your
+              {{ service()!.title.toLowerCase() }} requirements.
+            </p>
+            <a routerLink="/contact" class="btn btn-primary w-full text-center block mb-3">
+              Contact Us
+            </a>
+            <a routerLink="/services" class="flex items-center justify-center gap-2 text-sm text-teal hover:underline font-medium py-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+              </svg>
+              All Services
+            </a>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Related Services CTA -->
+  <!-- Process Steps -->
   <section class="section-padding bg-off-white">
     <div class="container-custom">
-      <div class="card p-8 text-center max-w-3xl mx-auto">
-        <h3 class="mb-4">Interested in This Service?</h3>
-        <p class="text-muted mb-6">
-          Contact our team to discuss how we can help with your {{ service()!.title.toLowerCase() }} needs
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a routerLink="/contact" class="btn btn-primary">
-            Get in Touch
-          </a>
-          <a routerLink="/services" class="btn btn-outline">
-            View All Services
-          </a>
+      <h2 class="text-center mb-4">Our Process</h2>
+      <p class="text-center text-muted mb-12 max-w-2xl mx-auto">
+        We take a structured, professional approach to every engagement
+      </p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+        <div class="text-center">
+          <div class="w-14 h-14 mx-auto mb-4 bg-teal rounded-full flex items-center justify-center text-white text-xl font-bold shadow-md">1</div>
+          <h4 class="mb-2">Initial Consultation</h4>
+          <p class="text-sm text-muted">We assess your project needs, site context, and development goals</p>
+        </div>
+        <div class="text-center">
+          <div class="w-14 h-14 mx-auto mb-4 bg-teal rounded-full flex items-center justify-center text-white text-xl font-bold shadow-md">2</div>
+          <h4 class="mb-2">Feasibility & Strategy</h4>
+          <p class="text-sm text-muted">We develop a tailored planning strategy to achieve your objectives</p>
+        </div>
+        <div class="text-center">
+          <div class="w-14 h-14 mx-auto mb-4 bg-teal rounded-full flex items-center justify-center text-white text-xl font-bold shadow-md">3</div>
+          <h4 class="mb-2">Application & Approvals</h4>
+          <p class="text-sm text-muted">We prepare, submit and manage all regulatory applications</p>
+        </div>
+        <div class="text-center">
+          <div class="w-14 h-14 mx-auto mb-4 bg-teal rounded-full flex items-center justify-center text-white text-xl font-bold shadow-md">4</div>
+          <h4 class="mb-2">Delivery</h4>
+          <p class="text-sm text-muted">We see your project through to a successful outcome</p>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- CTA -->
+  <section class="section-padding bg-navy text-white">
+    <div class="container-custom text-center">
+      <h2 class="text-white mb-4">Ready to move forward?</h2>
+      <p class="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+        Get in touch with our team to discuss your {{ service()!.title.toLowerCase() }} requirements
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a routerLink="/contact" class="btn btn-primary">Get in Touch</a>
+        <a routerLink="/services" class="btn btn-outline">View All Services</a>
+      </div>
+    </div>
+  </section>
+
 } @else {
-  <!-- Service Not Found -->
   <section class="section-padding bg-white min-h-screen flex items-center">
     <div class="container-custom text-center">
       <h2 class="mb-4">Service Not Found</h2>
       <p class="text-muted mb-8">The service you're looking for doesn't exist.</p>
-      <a routerLink="/services" class="btn btn-primary">
-        View All Services
-      </a>
+      <a routerLink="/services" class="btn btn-primary">View All Services</a>
     </div>
   </section>
 }
+
