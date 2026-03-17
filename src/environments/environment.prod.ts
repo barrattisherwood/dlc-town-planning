@@ -5,5 +5,6 @@ export const environment = {
   cmsSiteId: 'dlc-townplanning',
   formsApiUrl: 'https://forms.arclink.dev/api',
   enableAnalytics: true,
-  apiTimeout: 10000
+  apiTimeout: 10000,
+  googleMapsApiKey: 'REPLACE_WITH_YOUR_GOOGLE_MAPS_API_KEY'
 };

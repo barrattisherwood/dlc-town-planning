@@ -2,9 +2,9 @@ import { Component, OnInit, AfterViewInit, OnDestroy, inject, signal, computed, 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CmsService } from '../../services/cms.service';
+import { GoogleMapsService } from '../../services/google-maps.service';
 import { Project } from '../../models/project.model';
 import { SafeUrlPipe } from '../../shared/pipes/safe-url.pipe';
-import * as L from 'leaflet';
 
 type ViewMode = 'list' | 'split' | 'map';
 
@@ -17,6 +17,7 @@ type ViewMode = 'list' | 'split' | 'map';
 })
 export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   private cmsService = inject(CmsService);
+  private googleMapsService = inject(GoogleMapsService);
   private zone = inject(NgZone);
 
   // State signals
@@ -26,9 +27,11 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   viewMode = signal<ViewMode>('split');
   categoryFilter = signal<string>('all');
 
-  // Leaflet map
-  private map?: L.Map;
-  private markers: Map<string, L.CircleMarker> = new Map();
+  // Google Maps
+  private map?: google.maps.Map;
+  private markers = new Map<string, google.maps.Marker>();
+  private mapContainerEl?: HTMLElement;
+  private pendingCenter: { lat: number; lng: number } | null = null;
 
   // Service-based categories
   categories = ['all', 'Master Planning', 'Township Establishment', 'Rezoning', 'Consent Use', 'Subdivision', 'Project Management', 'Municipal Planning'];
@@ -73,41 +76,52 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.map) {
-      this.map.remove();
-    }
+    this.clearMapInstance();
   }
 
-  private initMap(): void {
-    const mapEl = document.getElementById('projects-map');
+  private clearMapInstance(): void {
+    this.markers.forEach(m => m.setMap(null));
+    this.markers.clear();
+    this.map = undefined;
+    this.mapContainerEl = undefined;
+  }
+
+  private async initMap(): Promise<void> {
+    const mapEl = document.getElementById('projects-map') as HTMLElement | null;
     if (!mapEl) return;
 
-    // Clean up existing map if it exists
-    if (this.map) {
-      this.map.remove();
-      this.map = undefined;
-    }
+    this.clearMapInstance();
 
-    this.map = L.map(mapEl, {
-      center: [-1.286389, 36.817223], // Nairobi
+    // Load the Maps JS API (cached after first call)
+    await this.googleMapsService.load();
+
+    // Guard: view may have changed while loading
+    if (this.viewMode() === 'list') return;
+    // Guard: element may have been removed from DOM
+    if (!document.body.contains(mapEl)) return;
+
+    this.mapContainerEl = mapEl;
+    this.map = new google.maps.Map(mapEl, {
+      center: { lat: -25.7479, lng: 28.2293 }, // Pretoria
       zoom: 6,
+      mapTypeId: 'roadmap',
+      streetViewControl: false,
+      mapTypeControl: false,
+      fullscreenControl: false,
       zoomControl: true,
-      attributionControl: true
     });
 
-    // CARTO DarkMatter tiles
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-      attribution: '© OpenStreetMap contributors © CARTO',
-      subdomains: 'abcd',
-      maxZoom: 20
-    }).addTo(this.map);
-
     this.refreshMarkers();
+
+    if (this.pendingCenter) {
+      this.map.panTo(this.pendingCenter);
+      this.map.setZoom(10);
+      this.pendingCenter = null;
+    }
   }
 
   private refreshMarkers(): void {
     if (!this.map) {
-      // Map may not be initialized yet — try to init if element exists
       const mode = this.viewMode();
       if (mode === 'split' || mode === 'map') {
         this.initMap();
@@ -115,12 +129,9 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    // If the map container has been removed from the DOM (e.g. empty-state replaced it),
-    // destroy the stale instance and reinitialize on the new element
-    if (!document.body.contains(this.map.getContainer())) {
-      this.map.remove();
-      this.map = undefined;
-      this.markers.clear();
+    // Detect stale map container (DOM element removed)
+    if (this.mapContainerEl && !document.body.contains(this.mapContainerEl)) {
+      this.clearMapInstance();
       const mode = this.viewMode();
       if (mode === 'split' || mode === 'map') {
         this.initMap();
@@ -128,94 +139,86 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    // Clear existing markers
-    this.markers.forEach(marker => marker.remove());
+    // Remove existing markers
+    this.markers.forEach(m => m.setMap(null));
     this.markers.clear();
 
     const filtered = this.filteredProjects();
-    const bounds = L.latLngBounds([]);
+    const bounds = new google.maps.LatLngBounds();
+    let hasPositions = false;
 
-    // Add markers for filtered projects
     filtered.forEach(project => {
       if (project.latitude && project.longitude) {
         const isActive = this.activeProject()?.id === project.id;
-        const latLng: L.LatLngExpression = [project.latitude, project.longitude];
+        const position = { lat: project.latitude, lng: project.longitude };
 
-        const marker = L.circleMarker(latLng, {
-          radius: isActive ? 12 : 8,
-          fillColor: isActive ? '#0e7c72' : '#ffffff',
-          color: '#0e7c72',
-          weight: 2,
-          opacity: 1,
-          fillOpacity: isActive ? 1 : 0.8
+        const marker = new google.maps.Marker({
+          position,
+          map: this.map!,
+          icon: this.markerIcon(isActive),
+          zIndex: isActive ? 10 : 1,
         });
 
-        marker.on('click', () => {
-          this.zone.run(() => {
-            this.onMarkerClick(project);
-          });
+        marker.addListener('click', () => {
+          this.zone.run(() => this.onMarkerClick(project));
         });
 
-        marker.addTo(this.map!);
         this.markers.set(project.id, marker);
-        bounds.extend(latLng);
-
-        // Bring active marker to front
-        if (isActive) {
-          marker.bringToFront();
-        }
+        bounds.extend(position);
+        hasPositions = true;
       }
     });
 
-    // Fit bounds to show all markers if there are any
-    if (bounds.isValid() && !this.activeProject()) {
-      try {
-        this.map.fitBounds(bounds, { padding: [50, 50], maxZoom: 10 });
-      } catch (e) {
-        console.warn('Could not fit bounds:', e);
-      }
+    if (hasPositions && !this.activeProject()) {
+      this.map.fitBounds(bounds);
+      google.maps.event.addListenerOnce(this.map, 'bounds_changed', () => {
+        if ((this.map?.getZoom() ?? 0) > 10) this.map?.setZoom(10);
+      });
     }
+  }
+
+  private markerIcon(isActive: boolean): google.maps.Icon {
+    const r = isActive ? 14 : 10;
+    const fill = isActive ? '#0e7c72' : '#ffffff';
+    const stroke = '#0e7c72';
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${r * 2}" height="${r * 2}"><circle cx="${r}" cy="${r}" r="${r - 2}" fill="${fill}" stroke="${stroke}" stroke-width="2.5"/></svg>`;
+    return {
+      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,
+      scaledSize: new google.maps.Size(r * 2, r * 2),
+      anchor: new google.maps.Point(r, r),
+    };
   }
 
   onMarkerClick(project: Project): void {
     this.activeProject.set(project);
 
-    // Switch to split view if in map mode
     if (this.viewMode() === 'map') {
+      // Switch to split — centre map after map reinitialises
+      if (project.latitude && project.longitude) {
+        this.pendingCenter = { lat: project.latitude, lng: project.longitude };
+      }
       this.setView('split');
-      // Center map after it reinitializes
-      setTimeout(() => {
-        if (project.latitude && project.longitude) {
-          this.map?.setView([project.latitude, project.longitude], 10, { animate: true });
-        }
-      }, 400);
     } else if (this.map && project.latitude && project.longitude) {
-      this.map.setView([project.latitude, project.longitude], 10, { animate: true });
+      this.map.panTo({ lat: project.latitude, lng: project.longitude });
+      this.map.setZoom(10);
     }
 
-    // Scroll detail panel to top
     setTimeout(() => {
-      const detailPanel = document.querySelector('.project-detail-panel');
-      if (detailPanel) {
-        detailPanel.scrollTop = 0;
-      }
+      document.querySelector('.project-detail-panel')?.scrollTo({ top: 0 });
     }, 100);
   }
 
   onCardClick(project: Project): void {
     this.activeProject.set(project);
 
-    // Switch to split view if in list mode
     if (this.viewMode() === 'list') {
+      if (project.latitude && project.longitude) {
+        this.pendingCenter = { lat: project.latitude, lng: project.longitude };
+      }
       this.setView('split');
-      // Center map after it reinitializes
-      setTimeout(() => {
-        if (project.latitude && project.longitude) {
-          this.map?.setView([project.latitude, project.longitude], 10, { animate: true });
-        }
-      }, 400);
     } else if (this.map && project.latitude && project.longitude) {
-      this.map.setView([project.latitude, project.longitude], 10, { animate: true });
+      this.map.panTo({ lat: project.latitude, lng: project.longitude });
+      this.map.setZoom(10);
     }
   }
 
@@ -227,17 +230,10 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setView(mode: ViewMode): void {
-    // Clear active project when switching to list
     if (mode === 'list') {
       this.activeProject.set(null);
     }
-    // Always destroy the map when changing views — the DOM element gets
-    // recreated by Angular so we must reinitialize Leaflet on the new element
-    if (this.map) {
-      this.map.remove();
-      this.map = undefined;
-      this.markers.clear();
-    }
+    this.clearMapInstance();
     this.viewMode.set(mode);
     // Effect will reinitialize the map when mode is split or map
   }
