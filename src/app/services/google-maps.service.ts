@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Loader } from '@googlemaps/js-api-loader';
+import { setOptions, importLibrary } from '@googlemaps/js-api-loader';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class GoogleMapsService {
-  private loader = new Loader({
-    apiKey: environment.googleMapsApiKey,
-    version: 'weekly',
-    libraries: ['maps', 'marker']
-  });
+  private initialized = false;
 
-  /** Returns after the Maps JS API is ready. Safe to call multiple times. */
-  load(): Promise<typeof google> {
-    return this.loader.load();
+  /** Load the Maps JS API. Safe to call multiple times — cached after first load. */
+  async load(): Promise<void> {
+    if (!this.initialized) {
+      setOptions({
+        key: environment.googleMapsApiKey,
+        v: 'weekly',
+      });
+      this.initialized = true;
+    }
+    // importLibrary triggers script injection and returns once the library is ready
+    await importLibrary('maps');
   }
 }
