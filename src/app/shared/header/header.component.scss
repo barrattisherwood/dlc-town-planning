@@ -23,6 +23,14 @@
   .nav.scrolled & {
     padding: 0.75rem 0;
   }
+
+  @media (max-width: 768px) and (orientation: landscape) {
+    padding: 0.4rem 0;
+
+    .nav.scrolled & {
+      padding: 0.3rem 0;
+    }
+  }
 }
 
 .nav-logo img {
@@ -33,6 +41,14 @@
 
   .nav.scrolled & {
     height: 48px;
+  }
+
+  @media (max-width: 768px) and (orientation: landscape) {
+    height: 32px;
+
+    .nav.scrolled & {
+      height: 28px;
+    }
   }
 }
 

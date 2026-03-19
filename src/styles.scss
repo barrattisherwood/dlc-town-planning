@@ -93,6 +93,10 @@
   app-contact > section:first-child,
   app-service-detail > section:first-child {
     padding-top: 5.5rem; /* Account for fixed header height (~88px) */
+
+    @media (max-width: 768px) and (orientation: landscape) {
+      padding-top: 3.5rem; /* Smaller header in mobile landscape */
+    }
   }
 }
 

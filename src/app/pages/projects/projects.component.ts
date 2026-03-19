@@ -253,7 +253,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   firstImage(project: Project): string {
-    return project.images?.[0] || project.image || '/assets/images/placeholder-project.jpg';
+    return project.images?.[0] || project.image || '';
   }
 
   getVideoEmbedUrl(project: Project): string | null {
