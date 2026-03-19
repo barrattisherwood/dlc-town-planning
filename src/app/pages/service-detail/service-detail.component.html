@@ -59,7 +59,7 @@
               Speak to our team about your project and how we can help with your
               {{ service()!.title.toLowerCase() }} requirements.
             </p>
-            <a routerLink="/contact" class="btn btn-primary w-full text-center block mb-3">
+            <a routerLink="/contact" [queryParams]="{ service: service()!.title }" class="btn btn-primary w-full text-center block mb-3">
               Contact Us
             </a>
             <a routerLink="/services" class="flex items-center justify-center gap-2 text-sm text-teal hover:underline font-medium py-2">
@@ -115,7 +115,7 @@
         Get in touch with our team to discuss your {{ service()!.title.toLowerCase() }} requirements
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a routerLink="/contact" class="btn btn-primary">Get in Touch</a>
+        <a routerLink="/contact" [queryParams]="{ service: service()!.title }" class="btn btn-primary">Get in Touch</a>
         <a routerLink="/services" class="btn btn-outline">View All Services</a>
       </div>
     </div>

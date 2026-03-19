@@ -1,7 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-contact',
@@ -10,14 +11,31 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
-export class ContactComponent {
+export class ContactComponent implements OnInit {
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
+  private route = inject(ActivatedRoute);
 
   contactForm: FormGroup;
   submitted = signal(false);
   submitting = signal(false);
   error = signal<string | null>(null);
+
+  services = [
+    'Master Planning',
+    'Land Use Planning',
+    'Township Establishment',
+    'Rezoning Applications',
+    'Consent Use Applications',
+    'Subdivision & Consolidation',
+    'Removal of Restrictions',
+    'Municipal Planning',
+    'Project Management',
+    'Heritage Impact Assessments',
+    'Social Housing & Tenure',
+    'Land Reform',
+    'Other/General Inquiry'
+  ];
 
   constructor() {
     this.contactForm = this.fb.group({
@@ -30,15 +48,14 @@ export class ContactComponent {
     });
   }
 
-  services = [
-    'Land Use Planning',
-    'Township Establishment',
-    'Environmental Planning',
-    'Municipal Planning',
-    'Project Management',
-    'Heritage Impact Assessments',
-    'Other/General Inquiry'
-  ];
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const service = params['service'];
+      if (service && this.services.includes(service)) {
+        this.contactForm.patchValue({ service });
+      }
+    });
+  }
 
   onSubmit() {
     if (this.contactForm.valid) {
