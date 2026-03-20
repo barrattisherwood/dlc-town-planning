@@ -391,6 +391,26 @@
   }
 }
 
+// Placeholder logo for cards without images
+.card-image-placeholder {
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+
+  .placeholder-logo {
+    width: 65%;
+    max-width: 200px;
+    opacity: 0.08;
+    transform: rotate(-12deg) scale(1.25);
+    filter: grayscale(100%);
+    pointer-events: none;
+    user-select: none;
+  }
+}
+
 // Full card (list mode)
 .full-card {
   display: flex;

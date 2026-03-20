@@ -108,6 +108,10 @@
             <div class="card-image">
               <img [src]="firstImage(project)" [alt]="project.title" />
             </div>
+          } @else {
+            <div class="card-image card-image-placeholder">
+              <img src="/assets/images/dlc-logo-dark.png" alt="DLC Town Planning" class="placeholder-logo" />
+            </div>
           }
           <div class="card-content">
             <div class="card-location">
