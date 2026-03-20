@@ -315,7 +315,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         projectUrl: 'https://www.tatucity.com/',
         featured: true,
         completionDate: 'Ongoing',
-        image: '/assets/images/urban-development.jpg'
+        image: ''
       },
       {
         id: '2',
@@ -330,7 +330,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         longitude: 28.056847,
         featured: true,
         completionDate: '2023',
-        image: '/assets/images/sustainable-cities.jpg'
+        image: ''
       },
       {
         id: '3',
@@ -345,7 +345,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         longitude: 18.4200,
         featured: true,
         completionDate: '2024',
-        image: '/assets/images/infrastructure.jpg'
+        image: ''
       },
       {
         id: '4',
