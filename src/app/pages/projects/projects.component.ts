@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, inject, signal, computed, effect, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CmsService } from '../../services/cms.service';
 import { GoogleMapsService } from '../../services/google-maps.service';
 import { Project } from '../../models/project.model';
@@ -19,6 +20,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   private cmsService = inject(CmsService);
   private googleMapsService = inject(GoogleMapsService);
   private zone = inject(NgZone);
+  private route = inject(ActivatedRoute);
 
   // State signals
   projects = signal<Project[]>([]);
@@ -29,7 +31,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // Google Maps
   private map?: google.maps.Map;
-  private markers = new Map<string, google.maps.Marker>();
+  private markers = new Map<string, google.maps.marker.AdvancedMarkerElement>();
   private mapContainerEl?: HTMLElement;
   private pendingCenter: { lat: number; lng: number } | null = null;
 
@@ -69,6 +71,23 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.loadProjects();
+
+    // Check for slug in route to deep-link to a specific project
+    this.route.paramMap.subscribe(params => {
+      const slug = params.get('slug');
+      if (slug) {
+        const project = this.projects().find(p => p.slug === slug);
+        if (project) {
+          this.activeProject.set(project);
+          if (this.viewMode() === 'list') {
+            this.setView('split');
+          }
+          if (project.latitude && project.longitude) {
+            this.pendingCenter = { lat: project.latitude, lng: project.longitude };
+          }
+        }
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -80,7 +99,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private clearMapInstance(): void {
-    this.markers.forEach(m => m.setMap(null));
+    this.markers.forEach(m => m.map = null);
     this.markers.clear();
     this.map = undefined;
     this.mapContainerEl = undefined;
@@ -104,6 +123,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.map = new google.maps.Map(mapEl, {
       center: { lat: -25.7479, lng: 28.2293 }, // Pretoria
       zoom: 6,
+      mapId: 'dlc-projects-map',
       mapTypeId: 'roadmap',
       streetViewControl: false,
       mapTypeControl: false,
@@ -140,7 +160,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     // Remove existing markers
-    this.markers.forEach(m => m.setMap(null));
+    this.markers.forEach(m => m.map = null);
     this.markers.clear();
 
     const filtered = this.filteredProjects();
@@ -152,10 +172,10 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
         const isActive = this.activeProject()?.id === project.id;
         const position = { lat: project.latitude, lng: project.longitude };
 
-        const marker = new google.maps.Marker({
+        const marker = new google.maps.marker.AdvancedMarkerElement({
           position,
           map: this.map!,
-          icon: this.markerIcon(isActive),
+          content: this.markerContent(isActive),
           zIndex: isActive ? 10 : 1,
         });
 
@@ -177,16 +197,19 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  private markerIcon(isActive: boolean): google.maps.Icon {
-    const r = isActive ? 14 : 10;
-    const fill = isActive ? '#0e7c72' : '#ffffff';
-    const stroke = '#0e7c72';
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${r * 2}" height="${r * 2}"><circle cx="${r}" cy="${r}" r="${r - 2}" fill="${fill}" stroke="${stroke}" stroke-width="2.5"/></svg>`;
-    return {
-      url: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,
-      scaledSize: new google.maps.Size(r * 2, r * 2),
-      anchor: new google.maps.Point(r, r),
-    };
+  private markerContent(isActive: boolean): HTMLElement {
+    const size = isActive ? 40 : 32;
+    const fill = isActive ? '#0e7c72' : '#0e9e92';
+    const div = document.createElement('div');
+    div.style.cursor = 'pointer';
+    div.style.filter = isActive ? 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' : 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))';
+    div.style.transition = 'transform 0.2s, filter 0.2s';
+    div.style.transform = isActive ? 'scale(1.15)' : 'scale(1)';
+    div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 24 24">
+      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="${fill}" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="12" cy="9" r="3" fill="#fff"/>
+    </svg>`;
+    return div;
   }
 
   onMarkerClick(project: Project): void {
@@ -280,6 +303,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.projects.set([
       {
         id: '1',
+        slug: 'tatu-city',
         title: 'Tatu City',
         location: 'Nairobi, Kenya',
         region: 'East Africa',
@@ -295,6 +319,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       {
         id: '2',
+        slug: 'sandton-mixed-use-development',
         title: 'Sandton Mixed-Use Development',
         location: 'Sandton, Johannesburg',
         region: 'Southern Africa',
@@ -309,6 +334,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       {
         id: '3',
+        slug: 'cape-town-waterfront-residential',
         title: 'Cape Town Waterfront Residential',
         location: 'V&A Waterfront, Cape Town',
         region: 'Southern Africa',
@@ -323,6 +349,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       {
         id: '4',
+        slug: 'durban-industrial-park',
         title: 'Durban Industrial Park',
         location: 'Durban South, KwaZulu-Natal',
         region: 'Southern Africa',
@@ -336,6 +363,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       {
         id: '5',
+        slug: 'pretoria-office-park',
         title: 'Pretoria Office Park',
         location: 'Centurion, Pretoria',
         region: 'Southern Africa',
@@ -348,6 +376,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       {
         id: '6',
+        slug: 'stellenbosch-residential-estate',
         title: 'Stellenbosch Residential Estate',
         location: 'Stellenbosch, Western Cape',
         region: 'Southern Africa',
@@ -360,6 +389,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       {
         id: '7',
+        slug: 'port-elizabeth-township',
         title: 'Port Elizabeth Township',
         location: 'Port Elizabeth, Eastern Cape',
         region: 'Southern Africa',
@@ -372,6 +402,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       {
         id: '8',
+        slug: 'midrand-logistics-hub',
         title: 'Midrand Logistics Hub',
         location: 'Midrand, Gauteng',
         region: 'Southern Africa',
@@ -384,6 +415,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       },
       {
         id: '9',
+        slug: 'umhlanga-retail-centre',
         title: 'Umhlanga Retail Centre',
         location: 'Umhlanga, KwaZulu-Natal',
         region: 'Southern Africa',

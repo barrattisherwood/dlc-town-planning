@@ -13,6 +13,7 @@ export const routes: Routes = [
   { path: 'services', component: ServicesComponent, title: 'Services | DLC Town Planning' },
   { path: 'services/:slug', component: ServiceDetailComponent, title: 'Service Details | DLC Town Planning' },
   { path: 'projects', component: ProjectsComponent, title: 'Our Projects | DLC Town Planning' },
+  { path: 'projects/:slug', component: ProjectsComponent, title: 'Project Details | DLC Town Planning' },
   { path: 'contact', component: ContactComponent, title: 'Contact Us | DLC Town Planning' },
   { path: '404', component: NotFoundComponent, title: 'Page Not Found | DLC Town Planning' },
   { path: '**', component: NotFoundComponent, title: 'Page Not Found | DLC Town Planning' }

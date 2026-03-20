@@ -1,4 +1,5 @@
-<div class="card overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-teal/20 hover:-translate-y-1 group">
+<a [routerLink]="['/projects', project.slug || project.id]" class="block no-underline text-inherit">
+<div class="card overflow-hidden hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-teal/20 hover:-translate-y-1 group cursor-pointer">
   <!-- Project Image -->
   @if (project.image) {
     <div class="h-56 overflow-hidden relative">
@@ -56,3 +57,4 @@
     }
   </div>
 </div>
+</a>

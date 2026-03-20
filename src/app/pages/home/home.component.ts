@@ -44,9 +44,10 @@ export class HomeComponent implements OnInit {
 
     // Featured projects with real data
     this.featuredProjects.set([
-      { 
-        id: '1', 
-        title: 'Tatu City', 
+      {
+        id: '1',
+        slug: 'tatu-city',
+        title: 'Tatu City',
         location: 'Nairobi, Kenya', 
         region: 'East Africa',
         country: 'Kenya',
@@ -58,9 +59,10 @@ export class HomeComponent implements OnInit {
         longitude: 36.916667,
         completionDate: '2014'
       },
-      { 
-        id: '2', 
-        title: 'Cape Town Waterfront Development', 
+      {
+        id: '2',
+        slug: 'cape-town-waterfront-residential',
+        title: 'Cape Town Waterfront Development',
         location: 'V&A Waterfront, Cape Town', 
         region: 'Southern Africa',
         country: 'South Africa',
@@ -72,9 +74,10 @@ export class HomeComponent implements OnInit {
         longitude: 18.419222,
         completionDate: '2018'
       },
-      { 
-        id: '3', 
-        title: 'Durban Industrial Park', 
+      {
+        id: '3',
+        slug: 'durban-industrial-park',
+        title: 'Durban Industrial Park',
         location: 'Durban South, KwaZulu-Natal', 
         region: 'Southern Africa',
         country: 'South Africa',

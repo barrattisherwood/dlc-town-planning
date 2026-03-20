@@ -17,5 +17,6 @@ export class GoogleMapsService {
     }
     // importLibrary triggers script injection and returns once the library is ready
     await importLibrary('maps');
+    await importLibrary('marker');
   }
 }

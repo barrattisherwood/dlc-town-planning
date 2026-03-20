@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { Project } from '../../models/project.model';
 
 @Component({
   selector: 'app-project-card',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './project-card.component.html',
   styleUrl: './project-card.component.scss'
 })
