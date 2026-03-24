@@ -24,7 +24,30 @@ export class ServicesComponent implements OnInit {
   }
 
   loadServices() {
-    // Placeholder data - in production would call CMS service
+    this.loading.set(true);
+    this.cmsService.getServices().subscribe({
+      next: (entries) => {
+        if (entries.length > 0) {
+          this.services.set(entries.map((e, i) => ({
+            id: e._id,
+            slug: e.slug,
+            title: e.data.title,
+            summary: e.data.summary,
+            description: e.data.body ?? e.data.description ?? '',
+            icon: e.data.icon ?? '',
+            order: e.data.order ? Number(e.data.order) : i + 1,
+            featured: e.data.featured,
+          })).sort((a, b) => (a.order ?? 99) - (b.order ?? 99)));
+          this.loading.set(false);
+        } else {
+          this.loadFallbackServices();
+        }
+      },
+      error: () => this.loadFallbackServices(),
+    });
+  }
+
+  loadFallbackServices() {
     this.services.set([
       {
         id: '1',

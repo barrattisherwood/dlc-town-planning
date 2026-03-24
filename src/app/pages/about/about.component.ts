@@ -36,25 +36,43 @@ export class AboutComponent implements OnInit {
   }
 
   loadContent() {
-    // Placeholder data - in production would call CMS service
+    this.cmsService.getSiteSettings().subscribe({
+      next: (entry) => {
+        if (entry?.data?.pillars?.length) {
+          this.pillars.set(entry.data.pillars.map((p, i) => ({
+            id: String(i + 1),
+            title: p.title,
+            description: p.description,
+          })));
+        } else {
+          this.loadFallbackPillars();
+        }
+        this.loading.set(false);
+      },
+      error: () => {
+        this.loadFallbackPillars();
+        this.loading.set(false);
+      },
+    });
+  }
+
+  loadFallbackPillars() {
     this.pillars.set([
-      { 
-        id: '1', 
-        title: '30 Years of Expertise', 
+      {
+        id: '1',
+        title: '30 Years of Expertise',
         description: 'With three decades of collective expertise, skills and resources, we have the capabilities to successfully undertake - from inception to final delivery - the town-planning and project management aspects of any venture, from large sophisticated multi-disciplinary programs to small community projects.'
       },
-      { 
-        id: '2', 
-        title: 'Comprehensive Services', 
+      {
+        id: '2',
+        title: 'Comprehensive Services',
         description: 'Our services span the full spectrum of town planning including township establishment, rezoning applications, consent use applications, subdivision of land, consolidation of erven, environmental impact assessments, and complete project management and advisory services.'
       },
-      { 
-        id: '3', 
-        title: 'Pan-African Reach', 
+      {
+        id: '3',
+        title: 'Pan-African Reach',
         description: 'DLC Town Plan Services have expanded, resulting in a comprehensive capability of delivering services, not only in Gauteng and South-Africa, but also into Africa and beyond. Clients range from individuals to large corporations including private landowners, developers, local and regional governments, mining and industrial sector companies.'
       }
     ]);
-
-    this.loading.set(false);
   }
 }

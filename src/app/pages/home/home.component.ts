@@ -28,21 +28,97 @@ export class HomeComponent implements OnInit {
   }
 
   loadContent() {
-    // For now, use placeholder data until CMS is connected
-    // In production, these would call the CMS service
-    this.pillars.set([
-      { id: '1', title: 'Experience', description: 'Over 20 years of town planning expertise across Africa', icon: 'experience' },
-      { id: '2', title: 'Professional', description: 'SACPLAN registered and SACLAP accredited planners', icon: 'professional' },
-      { id: '3', title: 'Comprehensive', description: 'Full spectrum of planning and project management services', icon: 'comprehensive' }
-    ]);
+    // Load site settings for pillars
+    this.cmsService.getSiteSettings().subscribe({
+      next: (entry) => {
+        if (entry?.data?.pillars?.length) {
+          this.pillars.set(entry.data.pillars.map((p, i) => ({
+            id: String(i + 1),
+            title: p.title,
+            description: p.description,
+          })));
+        } else {
+          this.pillars.set([
+            { id: '1', title: 'Experience', description: 'Over 20 years of town planning expertise across Africa', icon: 'experience' },
+            { id: '2', title: 'Professional', description: 'SACPLAN registered and SACLAP accredited planners', icon: 'professional' },
+            { id: '3', title: 'Comprehensive', description: 'Full spectrum of planning and project management services', icon: 'comprehensive' }
+          ]);
+        }
+      },
+      error: () => {
+        this.pillars.set([
+          { id: '1', title: 'Experience', description: 'Over 20 years of town planning expertise across Africa', icon: 'experience' },
+          { id: '2', title: 'Professional', description: 'SACPLAN registered and SACLAP accredited planners', icon: 'professional' },
+          { id: '3', title: 'Comprehensive', description: 'Full spectrum of planning and project management services', icon: 'comprehensive' }
+        ]);
+      },
+    });
 
-    this.services.set([
-      { id: '1', slug: 'land-use-planning', title: 'Land Use Planning', summary: 'Comprehensive land use and zoning solutions', description: '', icon: 'land' },
-      { id: '2', slug: 'township-establishment', title: 'Township Establishment', summary: 'Expert guidance through township development processes', description: '', icon: 'township' },
-      { id: '3', slug: 'master-planning', title: 'Master Planning', summary: 'Comprehensive master plans for integrated large-scale developments', description: '', icon: 'masterplan' }
-    ]);
+    // Load featured services (first 3 by order)
+    this.cmsService.getServices().subscribe({
+      next: (entries) => {
+        if (entries.length > 0) {
+          const mapped = entries
+            .map((e, i) => ({
+              id: e._id,
+              slug: e.slug,
+              title: e.data.title,
+              summary: e.data.summary,
+              description: e.data.body ?? e.data.description ?? '',
+              icon: e.data.icon ?? '',
+              order: e.data.order ? Number(e.data.order) : i + 1,
+            }))
+            .sort((a, b) => (a.order ?? 99) - (b.order ?? 99))
+            .slice(0, 3);
+          this.services.set(mapped);
+        } else {
+          this.services.set([
+            { id: '1', slug: 'land-use-planning', title: 'Land Use Planning', summary: 'Comprehensive land use and zoning solutions', description: '', icon: 'land' },
+            { id: '2', slug: 'township-establishment', title: 'Township Establishment', summary: 'Expert guidance through township development processes', description: '', icon: 'township' },
+            { id: '3', slug: 'master-planning', title: 'Master Planning', summary: 'Comprehensive master plans for integrated large-scale developments', description: '', icon: 'masterplan' }
+          ]);
+        }
+      },
+      error: () => {
+        this.services.set([
+          { id: '1', slug: 'land-use-planning', title: 'Land Use Planning', summary: 'Comprehensive land use and zoning solutions', description: '', icon: 'land' },
+          { id: '2', slug: 'township-establishment', title: 'Township Establishment', summary: 'Expert guidance through township development processes', description: '', icon: 'township' },
+          { id: '3', slug: 'master-planning', title: 'Master Planning', summary: 'Comprehensive master plans for integrated large-scale developments', description: '', icon: 'masterplan' }
+        ]);
+      },
+    });
 
-    // Featured projects with real data
+    // Load featured projects from CMS
+    this.cmsService.getFeaturedProjects().subscribe({
+      next: (entries) => {
+        if (entries.length > 0) {
+          this.featuredProjects.set(entries.map(e => ({
+            id: e._id,
+            slug: e.slug,
+            title: e.data.title,
+            location: e.data.location,
+            region: e.data.region,
+            country: e.data.country,
+            category: e.data.category,
+            description: e.data.description,
+            image: e.data.image ?? '',
+            images: e.data.images,
+            projectUrl: e.data.projectUrl,
+            latitude: e.data.latitude,
+            longitude: e.data.longitude,
+            featured: true,
+            completionDate: e.data.completionDate,
+          })));
+          this.loading.set(false);
+        } else {
+          this.loadFallbackFeaturedProjects();
+        }
+      },
+      error: () => this.loadFallbackFeaturedProjects(),
+    });
+  }
+
+  loadFallbackFeaturedProjects() {
     this.featuredProjects.set([
       {
         id: '1',
@@ -90,7 +166,6 @@ export class HomeComponent implements OnInit {
         completionDate: '2019'
       }
     ]);
-
     this.loading.set(false);
   }
 }

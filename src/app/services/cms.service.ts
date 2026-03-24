@@ -71,11 +71,13 @@ export interface ServiceData {
   title: string;
   summary: string;
   description: string;
+  body?: string;
   icon: string;
   category?: string;
   image?: string;
   featured?: boolean;
   order?: number;
+  features?: string[];
 }
 
 /**

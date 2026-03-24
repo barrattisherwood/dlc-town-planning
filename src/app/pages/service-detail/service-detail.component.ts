@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Service } from '../../models/project.model';
+import { CmsService } from '../../services/cms.service';
 import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-spinner.component';
 
 @Component({
@@ -13,6 +14,7 @@ import { LoadingSpinnerComponent } from '../../shared/loading-spinner/loading-sp
 })
 export class ServiceDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private cmsService = inject(CmsService);
 
   service = signal<Service | null>(null);
   loading = signal(true);
@@ -222,7 +224,27 @@ export class ServiceDetailComponent implements OnInit {
 
   loadService(slug: string) {
     this.loading.set(true);
-    this.service.set(this.servicesData[slug] ?? null);
-    this.loading.set(false);
+    this.cmsService.getServiceBySlug(slug).subscribe({
+      next: (entry) => {
+        if (entry) {
+          this.service.set({
+            id: entry._id,
+            slug: entry.slug,
+            title: entry.data.title,
+            summary: entry.data.summary,
+            description: entry.data.body ?? entry.data.description ?? '',
+            icon: entry.data.icon ?? '',
+            features: entry.data.features,
+          });
+        } else {
+          this.service.set(this.servicesData[slug] ?? null);
+        }
+        this.loading.set(false);
+      },
+      error: () => {
+        this.service.set(this.servicesData[slug] ?? null);
+        this.loading.set(false);
+      },
+    });
   }
 }

@@ -1,0 +1,215 @@
+{
+  "site-settings": {
+    "email": "admin@dlcgroup.co.za",
+    "phone": "+27 (12) 346 7890",
+    "address": "39a 12th Street, Menlo Park, Pretoria 0082",
+    "postal": "",
+    "facebook": "",
+    "linkedin": ""
+  },
+  "services": [
+    {
+      "title": "Master Planning",
+      "summary": "Comprehensive master plans for large-scale integrated developments",
+      "body": "We develop holistic spatial master plans for large-scale mixed-use developments, estates, and urban growth nodes. From conceptual vision through to stakeholder approvals, our master plans provide a framework for phased development that is financially viable, spatially coherent, and regulatory compliant.",
+      "order": "1"
+    },
+    {
+      "title": "Township Establishment",
+      "summary": "Full-service township development from concept to proclamation",
+      "body": "We guide clients through the full township establishment process — from initial site analysis and layout design through to municipal and provincial approval and final proclamation. Our team coordinates all required technical disciplines to ensure a smooth and compliant process.",
+      "order": "2"
+    },
+    {
+      "title": "Rezoning Applications",
+      "summary": "Section 56 applications and rezoning under various legislative frameworks",
+      "body": "We manage the full rezoning application process to unlock the development potential of your land. Our team prepares and motivates applications under SPLUMA, LUPA, and applicable town-planning schemes, liaising with municipalities to achieve favourable outcomes.",
+      "order": "3"
+    },
+    {
+      "title": "Consent Use Applications",
+      "summary": "Applications for land uses that require consent within existing zoning",
+      "body": "Consent use applications allow compatible land uses that fall outside the primary rights of a zone. We prepare, motivate and submit consent use applications in terms of applicable town-planning schemes, guiding clients through the municipal process from submission to approval.",
+      "order": "4"
+    },
+    {
+      "title": "Subdivision & Consolidation",
+      "summary": "Land subdivision and consolidation for optimal development outcomes",
+      "body": "We manage applications for the subdivision of land and consolidation of erven under applicable legislation, including the Agricultural Land Act, the Division of Land Ordinance, and Section 92 of the Town-Planning Ordinance. Our team handles the full process from layout design to conditions compliance.",
+      "order": "5"
+    },
+    {
+      "title": "Removal of Restrictions",
+      "summary": "Clearing title deed conditions that limit your development potential",
+      "body": "Restrictive title deed conditions and servitudes can significantly limit what you can do with your property. We manage the application process for the removal of restrictions under the Gauteng Removal of Restrictions Act and other applicable legislation, freeing up your land for its intended use.",
+      "order": "6"
+    },
+    {
+      "title": "Land Use Planning",
+      "summary": "Comprehensive land use and zoning solutions for sustainable development",
+      "body": "Our land use planning services provide comprehensive solutions for property development, zoning advice, and regulatory compliance. We guide clients from initial land use assessment through to approved development rights, navigating the complexity of municipal planning frameworks.",
+      "order": "7"
+    },
+    {
+      "title": "Municipal Planning",
+      "summary": "Strategic spatial planning support for local government",
+      "body": "We partner with municipalities and local government to develop spatial planning frameworks that guide sustainable urban growth, stimulate investment, and protect community interests. Our municipal planning team brings both technical excellence and practical implementation experience.",
+      "order": "8"
+    },
+    {
+      "title": "Project Management",
+      "summary": "End-to-end development project coordination from inception to completion",
+      "body": "Our project management services ensure your development progresses smoothly from concept through to completion, coordinating all technical disciplines and administrative processes. We apply proven methodologies to deliver projects on time, within budget, and to specification.",
+      "order": "9"
+    },
+    {
+      "title": "Heritage Impact Assessments",
+      "summary": "Cultural heritage evaluation and compliance with national legislation",
+      "body": "We conduct comprehensive heritage impact assessments to identify, evaluate, and mitigate impacts on cultural and historical resources in development areas. Our network of heritage specialists ensures compliance with the National Heritage Resources Act and all applicable legislation.",
+      "order": "10"
+    },
+    {
+      "title": "Social Housing & Tenure",
+      "summary": "Planning support for sustainable social housing and tenure upgrading",
+      "body": "We provide town planning and project management support for social housing developments, informal settlement upgrades, and tenure enhancement projects. Our team brings experience in community consultation, regulatory compliance, and governmental programme requirements.",
+      "order": "11"
+    },
+    {
+      "title": "Land Reform",
+      "summary": "Facilitating land reform, redistributive development, and community planning",
+      "body": "We support land reform initiatives through professional town planning, project management, and community engagement services. Our team works closely with government, communities, and private sector partners to achieve equitable and productive land reform outcomes.",
+      "order": "12"
+    }
+  ],
+  "pillars": [
+    {
+      "title": "30 Years of Expertise",
+      "description": "With three decades of collective expertise, skills and resources, we have the capabilities to successfully undertake - from inception to final delivery - the town-planning and project management aspects of any venture, from large sophisticated multi-disciplinary programs to small community projects.",
+      "order": "1"
+    },
+    {
+      "title": "Comprehensive Services",
+      "description": "Our services span the full spectrum of town planning including township establishment, rezoning applications, consent use applications, subdivision of land, consolidation of erven, environmental impact assessments, and complete project management and advisory services.",
+      "order": "2"
+    },
+    {
+      "title": "Pan-African Reach",
+      "description": "DLC Town Plan Services have expanded, resulting in a comprehensive capability of delivering services, not only in Gauteng and South-Africa, but also into Africa and beyond. Clients range from individuals to large corporations including private landowners, developers, local and regional governments, mining and industrial sector companies.",
+      "order": "3"
+    }
+  ],
+  "team": [
+    {
+      "photo": "",
+      "caption": "Frikkie de Lange — Owner & Town Planner"
+    },
+    {
+      "photo": "",
+      "caption": "Nandré du Toit — Town Planner"
+    },
+    {
+      "photo": "",
+      "caption": "DC Pretorius — Town Planner"
+    },
+    {
+      "photo": "",
+      "caption": "Janée Bresler — Town Planner"
+    },
+    {
+      "photo": "",
+      "caption": "Sabrina Mon — Town Planner"
+    }
+  ],
+  "projects": [
+    {
+      "title": "Tatu City",
+      "summary": "World-class mixed-use urban centre north of Nairobi — a pioneering live-work-play development in Africa.",
+      "description": "DLC Town Plan takes immense pride in its integral role in shaping and orchestrating the development of TATU City. The essence of Tatu City's aspiration lies in the conception of an unparalleled, world-class mixed-use urban center—a pioneering endeavor within the African landscape. At its core, this vision revolves around the \"live-work-play\" concept, aimed at cultivating a dynamic, decentralized hub to the north of Nairobi City.",
+      "location": "Nairobi, Kenya",
+      "country": "Kenya",
+      "region": "africa",
+      "category": "master-planning",
+      "featured": true
+    },
+    {
+      "title": "Sandton Mixed-Use Development",
+      "summary": "Large-scale urban renewal combining residential, commercial, and retail in Johannesburg's financial district.",
+      "description": "Large-scale urban renewal project combining residential, commercial, and retail components in the heart of Johannesburg's financial district. This development brings together world-class amenities and sustainable design principles.",
+      "location": "Sandton, Johannesburg",
+      "country": "South Africa",
+      "region": "south-africa",
+      "category": "town-planning",
+      "featured": true
+    },
+    {
+      "title": "Cape Town Waterfront Residential",
+      "summary": "Luxury residential development with 200+ units overlooking Table Bay at the V&A Waterfront.",
+      "description": "Luxury residential development with 200+ units and world-class amenities overlooking Table Bay. Features include a rooftop pool, gym, concierge services, and direct access to the waterfront promenade.",
+      "location": "V&A Waterfront, Cape Town",
+      "country": "South Africa",
+      "region": "south-africa",
+      "category": "town-planning",
+      "featured": true
+    },
+    {
+      "title": "Durban Industrial Park",
+      "summary": "Strategic industrial zone with modern logistics facilities supporting manufacturing and export sectors.",
+      "description": "Strategic industrial zone development with modern logistics facilities designed to support the growing manufacturing and export sectors in the region.",
+      "location": "Durban South, KwaZulu-Natal",
+      "country": "South Africa",
+      "region": "south-africa",
+      "category": "town-planning",
+      "featured": true
+    },
+    {
+      "title": "Pretoria Office Park",
+      "summary": "Grade-A office park with solar panels, rainwater harvesting, and green building certifications.",
+      "description": "Grade-A office park development with sustainable design features including solar panels, rainwater harvesting, and green building certifications.",
+      "location": "Centurion, Pretoria",
+      "country": "South Africa",
+      "region": "south-africa",
+      "category": "town-planning",
+      "featured": false
+    },
+    {
+      "title": "Stellenbosch Residential Estate",
+      "summary": "Boutique Mediterranean-inspired estate in the heart of the Winelands with vineyard views.",
+      "description": "Boutique estate development in the heart of the Winelands, featuring Mediterranean-inspired architecture and vineyard views.",
+      "location": "Stellenbosch, Western Cape",
+      "country": "South Africa",
+      "region": "south-africa",
+      "category": "town-planning",
+      "featured": false
+    },
+    {
+      "title": "Port Elizabeth Township",
+      "summary": "Social housing township development with schools, clinics, and recreational spaces.",
+      "description": "Social housing township development with community facilities including schools, clinics, and recreational spaces designed to foster community development.",
+      "location": "Port Elizabeth, Eastern Cape",
+      "country": "South Africa",
+      "region": "south-africa",
+      "category": "town-planning",
+      "featured": false
+    },
+    {
+      "title": "Midrand Logistics Hub",
+      "summary": "Modern logistics and warehousing facility between Johannesburg and Pretoria with major highway access.",
+      "description": "Modern logistics and warehousing facility development strategically located between Johannesburg and Pretoria with access to major highways.",
+      "location": "Midrand, Gauteng",
+      "country": "South Africa",
+      "region": "south-africa",
+      "category": "town-planning",
+      "featured": false
+    },
+    {
+      "title": "Umhlanga Retail Centre",
+      "summary": "Regional shopping centre with 150+ stores, cinema complex, and family entertainment facilities.",
+      "description": "Regional shopping centre with entertainment and dining precinct, featuring over 150 stores, cinema complex, and family entertainment facilities.",
+      "location": "Umhlanga, KwaZulu-Natal",
+      "country": "South Africa",
+      "region": "south-africa",
+      "category": "project-management",
+      "featured": false
+    }
+  ]
+}

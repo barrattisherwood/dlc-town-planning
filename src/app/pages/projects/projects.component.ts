@@ -299,7 +299,38 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   loadProjects() {
-    // Placeholder data - in production would call CMS service
+    this.loading.set(true);
+    this.cmsService.getProjects().subscribe({
+      next: (entries) => {
+        if (entries.length > 0) {
+          this.projects.set(entries.map(e => ({
+            id: e._id,
+            slug: e.slug,
+            title: e.data.title,
+            location: e.data.location,
+            region: e.data.region,
+            country: e.data.country,
+            category: e.data.category,
+            description: e.data.description,
+            image: e.data.image ?? '',
+            images: e.data.images,
+            videoUrl: e.data.videoUrl,
+            projectUrl: e.data.projectUrl,
+            latitude: e.data.latitude,
+            longitude: e.data.longitude,
+            featured: e.data.featured,
+            completionDate: e.data.completionDate,
+          })));
+          this.loading.set(false);
+        } else {
+          this.loadFallbackProjects();
+        }
+      },
+      error: () => this.loadFallbackProjects(),
+    });
+  }
+
+  loadFallbackProjects() {
     this.projects.set([
       {
         id: '1',
