@@ -18,8 +18,8 @@ module.exports = {
         tertiary: '#6C737B',
       },
       fontFamily: {
-        heading: ['Century Gothic', 'CenturyGothic', 'AppleGothic', 'sans-serif'],
-        body: ['Century Gothic', 'CenturyGothic', 'AppleGothic', 'sans-serif'],
+        heading: ['Nunito', 'sans-serif'],
+        body: ['Nunito', 'sans-serif'],
       },
     },
   },
