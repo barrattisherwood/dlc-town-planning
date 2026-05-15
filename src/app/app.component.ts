@@ -12,5 +12,5 @@ import { BackToTopComponent } from './shared/back-to-top/back-to-top.component';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'dlc-town-planning';
+  title = 'DLC Town Planning';
 }
