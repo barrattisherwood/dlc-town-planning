@@ -1,7 +1,9 @@
-export async function onRequest({ request, env }) {
-  const response = await env.ASSETS.fetch(request);
-  if (response.status === 404) {
-    return env.ASSETS.fetch(new URL('/index.html', request.url).toString());
+export async function onRequest(context) {
+  const url = new URL(context.request.url);
+  // Static assets (files with extensions) — let Cloudflare serve them directly
+  if (url.pathname.match(/\.\w+$/)) {
+    return context.next();
   }
-  return response;
+  // Angular routes (no file extension) — serve index.html for SPA routing
+  return context.env.ASSETS.fetch(new URL('/index.html', context.request.url).toString());
 }
