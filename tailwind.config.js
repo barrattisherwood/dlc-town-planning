@@ -18,8 +18,8 @@ module.exports = {
         tertiary: '#6C737B',
       },
       fontFamily: {
-        heading: ['Playfair Display', 'serif'],
-        body: ['Source Sans Pro', 'sans-serif'],
+        heading: ['Century Gothic', 'CenturyGothic', 'AppleGothic', 'sans-serif'],
+        body: ['Century Gothic', 'CenturyGothic', 'AppleGothic', 'sans-serif'],
       },
     },
   },
