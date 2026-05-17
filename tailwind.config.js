@@ -18,8 +18,8 @@ module.exports = {
         tertiary: '#6C737B',
       },
       fontFamily: {
-        heading: ['Jost', 'sans-serif'],
-        body: ['Jost', 'sans-serif'],
+        heading: ['Questrial', 'sans-serif'],
+        body: ['Questrial', 'sans-serif'],
       },
     },
   },
