@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-contact',
@@ -69,7 +70,7 @@ export class ContactComponent implements OnInit {
         data: this.contactForm.value
       };
 
-      this.http.post('https://forms.arclink.dev/api/submit', formData).subscribe({
+      this.http.post(`${environment.formsApiUrl}/submit`, formData).subscribe({
         next: () => {
           this.submitting.set(false);
           this.submitted.set(true);
