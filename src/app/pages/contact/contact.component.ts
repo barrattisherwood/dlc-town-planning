@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
@@ -16,6 +16,8 @@ export class ContactComponent implements OnInit {
   private fb = inject(FormBuilder);
   private http = inject(HttpClient);
   private route = inject(ActivatedRoute);
+
+  @ViewChild('formCard') formCard!: ElementRef;
 
   contactForm: FormGroup;
   submitted = signal(false);
@@ -75,16 +77,14 @@ export class ContactComponent implements OnInit {
           this.submitting.set(false);
           this.submitted.set(true);
           this.contactForm.reset();
-
-          // Reset success message after 5 seconds
-          setTimeout(() => {
-            this.submitted.set(false);
-          }, 5000);
+          this.scrollToResult();
+          setTimeout(() => { this.submitted.set(false); }, 5000);
         },
         error: (err) => {
           console.error('Form submission error:', err);
           this.submitting.set(false);
           this.error.set('Failed to submit form. Please try again or contact us directly via email.');
+          this.scrollToResult();
         }
       });
     } else {
@@ -93,6 +93,10 @@ export class ContactComponent implements OnInit {
         this.contactForm.get(key)?.markAsTouched();
       });
     }
+  }
+
+  private scrollToResult() {
+    this.formCard?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
   hasError(field: string, error: string): boolean {
