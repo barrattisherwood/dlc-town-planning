@@ -671,24 +671,26 @@
 }
 
 @media (max-width: 768px) {
-  .filter-pills {
-    display: none;
-  }
-
   .mode-split {
     flex-direction: column !important;
+    height: auto !important;
+    min-height: calc(100vh - 220px);
 
-    .project-list,
-    .project-detail-panel {
+    .project-list {
       width: 100% !important;
-      max-height: 40vh;
+      max-height: none !important;
       border-right: none !important;
       border-bottom: 1px solid var(--warm-grey);
     }
 
-    .map-container {
-      height: 60vh;
+    .project-detail-panel {
       width: 100% !important;
+      max-height: none !important;
+      border-right: none !important;
+    }
+
+    .map-container {
+      display: none !important;
     }
   }
 
