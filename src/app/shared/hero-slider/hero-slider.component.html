@@ -11,7 +11,15 @@
       >
         <!-- Background Image with Overlay -->
         <div class="absolute inset-0 z-0">
-          <img [src]="slide.image" [alt]="slide.title" class="w-full h-full object-cover" loading="eager" />
+          <div class="slide-placeholder absolute inset-0"></div>
+          <img
+            [src]="slide.image"
+            [alt]="slide.title"
+            class="slide-image w-full h-full object-cover"
+            [class.is-loaded]="isImageLoaded($index)"
+            loading="eager"
+            (load)="onImageLoad($index)"
+          />
           <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30 z-10"></div>
         </div>
 

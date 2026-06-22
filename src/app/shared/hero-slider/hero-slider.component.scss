@@ -1,13 +1,31 @@
-// Smooth transitions are handled in the template with Tailwind classes
-// Additional custom styles can be added here if needed
-
 :host {
   display: block;
 }
 
-// Ensure smooth image loading
 img {
   object-position: center;
+}
+
+.slide-placeholder {
+  background: linear-gradient(135deg, #0a1628 0%, #0e3a5c 50%, #0a1628 100%);
+  background-size: 200% 200%;
+  animation: shimmer-bg 3s ease-in-out infinite;
+}
+
+@keyframes shimmer-bg {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+.slide-image {
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+  position: relative;
+  z-index: 1;
+
+  &.is-loaded {
+    opacity: 1;
+  }
 }
 
 // Hero text styles - override global heading styles

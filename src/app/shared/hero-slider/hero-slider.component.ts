@@ -18,7 +18,16 @@ interface Slide {
 })
 export class HeroSliderComponent implements OnInit, OnDestroy {
   currentSlide = signal(0);
+  loadedSlides = signal<Set<number>>(new Set());
   private autoPlayInterval?: ReturnType<typeof setInterval>;
+
+  onImageLoad(index: number): void {
+    this.loadedSlides.update(set => new Set(set).add(index));
+  }
+
+  isImageLoaded(index: number): boolean {
+    return this.loadedSlides().has(index);
+  }
   
   slides: Slide[] = [
     {
