@@ -13,13 +13,15 @@
       <div class="absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
     </div>
   } @else {
-    <!-- No Image Placeholder — greyscale DLC logo, tilted & zoomed -->
-    <div class="h-56 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center relative overflow-hidden">
+    <!-- No Image Placeholder -->
+    <div class="h-56 relative overflow-hidden project-card-placeholder">
       <img
         src="/assets/images/dlc-logo-dark.png"
-        alt="DLC Town Planning"
-        class="absolute w-[70%] max-w-[220px] opacity-[0.08] rotate-[-12deg] scale-125 grayscale pointer-events-none select-none"
+        alt=""
+        class="absolute inset-0 w-full h-full object-contain p-8 opacity-[0.12] scale-125 rotate-[-8deg] pointer-events-none select-none"
+        aria-hidden="true"
       />
+      <div class="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/30 to-transparent"></div>
     </div>
   }
   

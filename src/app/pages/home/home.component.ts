@@ -91,8 +91,9 @@ export class HomeComponent implements OnInit {
     // Load featured projects from CMS
     this.cmsService.getFeaturedProjects().subscribe({
       next: (entries) => {
-        if (entries.length > 0) {
-          this.featuredProjects.set(entries.map(e => ({
+        const withImages = entries.filter(e => e.data.image || e.data.images?.length);
+        if (withImages.length > 0) {
+          this.featuredProjects.set(withImages.map(e => ({
             id: e._id,
             slug: e.slug,
             title: e.data.title,
@@ -129,7 +130,7 @@ export class HomeComponent implements OnInit {
         country: 'Kenya',
         category: 'Mixed-Use', 
         description: 'Large-scale master-planned community spanning 2,500 acres with residential, commercial, and industrial components', 
-        image: '/assets/images/projects/tatu-city.jpg',
+        image: '',
         featured: true,
         latitude: -1.166667,
         longitude: 36.916667,
@@ -144,7 +145,7 @@ export class HomeComponent implements OnInit {
         country: 'South Africa',
         category: 'Commercial', 
         description: 'Strategic commercial and retail development in the iconic V&A Waterfront precinct', 
-        image: '/assets/images/projects/cape-town-waterfront.jpg',
+        image: '',
         featured: true,
         latitude: -33.907444,
         longitude: 18.419222,
@@ -159,7 +160,7 @@ export class HomeComponent implements OnInit {
         country: 'South Africa',
         category: 'Industrial', 
         description: 'Comprehensive industrial park development with strategic logistics and manufacturing zones', 
-        image: '/assets/images/projects/durban-industrial.jpg',
+        image: '',
         featured: true,
         latitude: -29.9611,
         longitude: 30.9467,
