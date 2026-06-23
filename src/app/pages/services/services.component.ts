@@ -19,6 +19,33 @@ export class ServicesComponent implements OnInit {
   services = signal<Service[]>([]);
   loading = signal(true);
 
+  // Maps CMS title variations to our canonical routing slugs
+  private readonly titleToSlug: Record<string, string> = {
+    'master planning': 'master-planning',
+    'land use planning': 'land-use-planning',
+    'township establishment': 'township-establishment',
+    'rezoning': 'rezoning',
+    'rezoning applications': 'rezoning',
+    'rezoning application': 'rezoning',
+    'consent use': 'consent-use',
+    'consent use applications': 'consent-use',
+    'consent use application': 'consent-use',
+    'subdivision & consolidation': 'subdivision-consolidation',
+    'subdivision and consolidation': 'subdivision-consolidation',
+    'removal of restrictions': 'removal-of-restrictions',
+    'municipal planning': 'municipal-planning',
+    'project management': 'project-management',
+    'heritage impact assessments': 'heritage-impact',
+    'heritage impact assessment': 'heritage-impact',
+    'social housing & tenure': 'social-housing',
+    'social housing and tenure': 'social-housing',
+    'land reform': 'land-reform',
+  };
+
+  private resolveSlug(cmsSlug: string, title: string): string {
+    return this.titleToSlug[title.toLowerCase()] ?? cmsSlug;
+  }
+
   ngOnInit() {
     this.loadServices();
   }
@@ -30,7 +57,7 @@ export class ServicesComponent implements OnInit {
         if (entries.length > 0) {
           this.services.set(entries.map((e, i) => ({
             id: e._id,
-            slug: e.slug,
+            slug: this.resolveSlug(e.slug, e.data.title),
             title: e.data.title,
             summary: e.data.summary,
             description: e.data.body ?? e.data.description ?? '',
